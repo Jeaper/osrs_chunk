@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>OSRS Chunk Selector</title>
+	<link rel="stylesheet" href="src/game.css" type="text/css"/>
+	<script src="libs/requirejs/require.js"></script>
+	<script src="preloader_manifest.js"></script>
+	<style>
+	</style>
+</head>
+<body>
+<script>
+	function handleOnLoad() {
+		require(['require_config'], function () {
+			osrs_chunk.loadDependencies(true, function () {
+				osrs_chunk.createGame();
+
+			});
+		});
+	}
+
+	window.addEventListener('load', handleOnLoad, false);
+
+
+</script>
+<div id="gameWrapper">
+	<div id="content"></div>
+</div>
+<div id="fullscreenMask">
+	<div id="fullscreenMaskBackground"></div>
+</div>
+</body>
+</html>

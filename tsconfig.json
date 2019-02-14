@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"removeComments": false,
+		"out": "game.js",
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"target": "ES5"
+	},
+	"exclude": [
+		"node_modules",
+		"preloader.ts"
+	]
+}
