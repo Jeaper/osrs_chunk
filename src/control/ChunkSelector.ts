@@ -1,23 +1,22 @@
+///<reference path="../scene/SceneBuilder.ts"/>
+
 /**
  * Created by jespe on 2019-02-14.
  */
 module osrs_chunk.control {
+
 	import SceneBuilder = osrs_chunk.view.SceneBuilder;
 	import chunkIDs = osrs_chunk.gameConfig.chunkIDs;
+
 	export class ChunkSelector {
+		public selectedTile : number = -1;
+
 
 		private readonly game;
-
-		private selectedTile : number;
-
+		private selectorBorder : Phaser.Image;
+		private selectedTileMapImage : Phaser.Image;
 
 		constructor(game : osrs_chunk.Game) {
-			this.game = game;
-
-			const chunkMap = this.game.scene.chunkMap;
-			chunkMap.inputEnabled = true;
-			chunkMap.events.onInputDown.add(this.onBoardClick, this);
-
 			window['printChunks'] = () => {
 				const border = '-------------';
 				console.log(border);
@@ -33,35 +32,63 @@ module osrs_chunk.control {
 					console.log(border);
 				}
 			};
+
+			this.game = game;
+
+			this.selectorBorder = SceneBuilder.addImage('selectorBorder', 'border', undefined, this.game.scene.backGroundLayerOverlay);
+			this.selectorBorder.width = this.selectorBorder.height = gameConfig.chunkSize * 1.1;
+			this.selectorBorder.visible = false;
+			this.selectorBorder.exists = false;
+
+
+			this.selectedTileMapImage = SceneBuilder.addImage('selectedTileMapImage', 'chunks', 0, this.game.scene.backGroundLayerActive);
+			this.selectedTileMapImage.visible = false;
+			this.selectedTileMapImage.exists = false;
+
+			const chunkMap = this.game.scene.chunkMap;
+			chunkMap.inputEnabled = true;
+			chunkMap.events.onInputDown.add(this.onBoardClick, this);
+
+
 		}
 
 		public selectTile : (chunkID : number) => void = (chunkID : number) => {
 			console.log('No chunk selection action set.');
 		}
 
-		public selectTileByTilePos(chunkID : number) {
-			const pos = gameConfig.chunkIDs.getPositionFromChunkID(chunkID);
-			const widthInTiles : number = Math.floor(this.game.scene.chunkMap.texture.width / gameConfig.chunkSize);
-			const heightInTiles : number = Math.floor(this.game.scene.chunkMap.texture.height / gameConfig.chunkSize);
-			const tileSpriteIndex = (pos.y * widthInTiles) + pos.x;
-
+		public highlightTile(chunkID : number) {
 			this.selectedTile = chunkID;
 
+			const pos = chunkIDs.getPositionFromChunkID(chunkID);
+
 			const sprite = this.game.scene.chunkMap;
+
 			const x = sprite.position.x - (sprite.anchor.x * sprite.width);
 			const y = sprite.position.y - (sprite.anchor.y * sprite.height);
 
-			const graphics = this.game.add.graphics(x + (gameConfig.chunkSize * pos.x), y + (gameConfig.chunkSize * pos.y));
-			this.game.scene.backGroundLayer.add(graphics);
-
-			graphics.beginFill(0x4CBB17, 0.6);
-			graphics.drawRect(
-				0,
-				0,
-				gameConfig.chunkSize,
-				gameConfig.chunkSize,
+			const imagePos = new Phaser.Point(
+				x + (gameConfig.chunkSize * (pos.x + 0.5)),
+				y + (gameConfig.chunkSize * (pos.y + 0.5)),
 			);
-			graphics.endFill();
+			this.selectorBorder.position.x = imagePos.x;
+			this.selectorBorder.position.y = imagePos.y;
+			this.selectorBorder.visible = true;
+			this.selectorBorder.exists = true;
+
+			this.selectedTileMapImage.position.x = imagePos.x;
+			this.selectedTileMapImage.position.y = imagePos.y;
+			this.selectedTileMapImage.frame = chunkIDs.getSpriteIndexFromChunkID(chunkID);
+			this.selectedTileMapImage.visible = true;
+			this.selectedTileMapImage.exists = true;
+		}
+
+		public deselectTile() {
+			this.selectedTileMapImage.visible = false;
+			this.selectedTileMapImage.exists = false;
+			this.selectorBorder.visible = false;
+			this.selectorBorder.exists = false;
+			this.selectedTile = -1;
+
 		}
 
 
@@ -76,7 +103,7 @@ module osrs_chunk.control {
 			const column = Math.floor((onImageX / frameWidth));
 
 			const pos = new Phaser.Point(column, row);
-			this.selectTile(gameConfig.chunkIDs.getChunkIDFromPosition(pos));
+			this.selectTile(chunkIDs.getChunkIDFromPosition(pos));
 
 		}
 	}

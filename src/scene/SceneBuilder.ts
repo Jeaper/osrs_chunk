@@ -1,4 +1,3 @@
-///<reference path="../control/ChunkSelector.ts"/>
 /**
  * Created by jespe on 2019-02-12.
  */
@@ -6,7 +5,7 @@ module osrs_chunk.view {
 	import DisplayObject = PIXI.DisplayObject;
 	import DisplayObjectContainer = PIXI.DisplayObjectContainer;
 	import game = PIXI.game;
-	import ChunkSelector = osrs_chunk.control.ChunkSelector;
+	import Color = Phaser.Color;
 
 
 	export class SceneBuilder {
@@ -101,7 +100,11 @@ module osrs_chunk.view {
 
 			// Custom layers
 
-			scene.backGroundLayer = SceneBuilder.addGroup('backgroundLayer', scene.sceneRoot, -(gameConfig.gameSize.width / 2), -(gameConfig.gameSize.height / 2));
+			const x = -(gameConfig.gameSize.width / 2);
+			const y = -(gameConfig.gameSize.height / 2);
+			scene.backGroundLayer = SceneBuilder.addGroup('backgroundLayer', scene.sceneRoot, x, y);
+			scene.backGroundLayerActive = SceneBuilder.addGroup('backgroundLayerActive', scene.sceneRoot, x, y);
+			scene.backGroundLayerOverlay = SceneBuilder.addGroup('backgroundLayerOverlay', scene.sceneRoot, x, y);
 		}
 
 
@@ -111,6 +114,7 @@ module osrs_chunk.view {
 		 */
 		private buildBackground(scene : Scene) : void {
 			scene.chunkMap = SceneBuilder.addImage('chunkMap', 'chunks', '0', scene.backGroundLayer, 0, 0);
+			scene.chunkMap.tint = 0x383838;
 
 		}
 
@@ -128,7 +132,7 @@ module osrs_chunk.view {
 		 * @param scene
 		 */
 		private buildControls(scene : Scene) : void {
-			scene.chunkSelector = new ChunkSelector(SceneBuilder.game);
+			scene.chunkSelector = new osrs_chunk.control.ChunkSelector(SceneBuilder.game);
 
 		}
 	}

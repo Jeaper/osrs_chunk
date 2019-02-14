@@ -8,9 +8,8 @@ module osrs_chunk.view {
 		private menuLayer : Phaser.Group;
 		private readonly game;
 
-		private selectedTile : number;
 		private selectedTileImage : Phaser.Image;
-
+		private selectedTileMapImage : Phaser.Image;
 		constructor(game : osrs_chunk.Game) {
 			this.game = game;
 			const gameWidth = gameConfig.gameSize.width;
@@ -36,16 +35,22 @@ module osrs_chunk.view {
 			this.selectedTileImage = SceneBuilder.addImage('chunkMap', 'chunks', 48, this.menuLayer, 0, 0);
 			this.selectedTileImage.anchor.set(0, 0);
 
-			this.game.scene.chunkSelector.selectTile = (chunkID : number) => {
-				this.selectedTileImage.frame = gameConfig.chunkIDs.getSpriteIndexFromChunkID(chunkID);
-				this.game.scene.chunkSelector.selectTileByTilePos(chunkID);
+			const chunkSelector = this.game.scene.chunkSelector;
+			chunkSelector.selectTile = (chunkID : number) => {
+				if (chunkSelector.selectedTile !== chunkID) {
+					this.selectedTileImage.frame = gameConfig.chunkIDs.getSpriteIndexFromChunkID(chunkID);
+					this.selectedTileImage.visible = true;
+					this.selectedTileImage.exists = true;
+					chunkSelector.highlightTile(chunkID);
+				}
+				else {
+					this.selectedTileImage.visible = false;
+					this.selectedTileImage.exists = false;
+					chunkSelector.deselectTile();
+				}
 			};
 		}
 
-
-		public selectTileBySpriteIndex(tileIndex : number) {
-			this.selectedTileImage.frame = tileIndex;
-		}
 
 	}
 }

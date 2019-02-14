@@ -12,77 +12,12 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /**
- * Created by jespe on 2019-02-14.
- */
-var osrs_chunk;
-(function (osrs_chunk) {
-    var control;
-    (function (control) {
-        var ChunkSelector = /** @class */ (function () {
-            function ChunkSelector(game) {
-                this.selectTile = function (chunkID) {
-                    console.log('No chunk selection action set.');
-                };
-                this.game = game;
-                var chunkMap = this.game.scene.chunkMap;
-                chunkMap.inputEnabled = true;
-                chunkMap.events.onInputDown.add(this.onBoardClick, this);
-                window['printChunks'] = function () {
-                    var border = '-------------';
-                    console.log(border);
-                    var point = new Phaser.Point(0, 0);
-                    for (var i = 0; i < 10; i++) {
-                        point.x = point.y = i;
-                        console.log(point);
-                        var spriteIndex = osrs_chunk.gameConfig.chunkIDs.getSpriteIndexFromPosition(point);
-                        console.log('spriteIndex : ' + spriteIndex);
-                        var chunkID = osrs_chunk.gameConfig.chunkIDs.getChunkIDFromSpriteIndex(spriteIndex);
-                        console.log('chunkID : ' + chunkID);
-                        console.log(osrs_chunk.gameConfig.chunkIDs.getPositionFromChunkID(chunkID));
-                        console.log(border);
-                    }
-                };
-            }
-            ChunkSelector.prototype.selectTileByTilePos = function (chunkID) {
-                var pos = osrs_chunk.gameConfig.chunkIDs.getPositionFromChunkID(chunkID);
-                var widthInTiles = Math.floor(this.game.scene.chunkMap.texture.width / osrs_chunk.gameConfig.chunkSize);
-                var heightInTiles = Math.floor(this.game.scene.chunkMap.texture.height / osrs_chunk.gameConfig.chunkSize);
-                var tileSpriteIndex = (pos.y * widthInTiles) + pos.x;
-                this.selectedTile = chunkID;
-                var sprite = this.game.scene.chunkMap;
-                var x = sprite.position.x - (sprite.anchor.x * sprite.width);
-                var y = sprite.position.y - (sprite.anchor.y * sprite.height);
-                var graphics = this.game.add.graphics(x + (osrs_chunk.gameConfig.chunkSize * pos.x), y + (osrs_chunk.gameConfig.chunkSize * pos.y));
-                this.game.scene.backGroundLayer.add(graphics);
-                graphics.beginFill(0x4CBB17, 0.6);
-                graphics.drawRect(0, 0, osrs_chunk.gameConfig.chunkSize, osrs_chunk.gameConfig.chunkSize);
-                graphics.endFill();
-            };
-            ChunkSelector.prototype.onBoardClick = function (sprite, pointer) {
-                var x = sprite.worldPosition.x - (sprite.anchor.x * sprite.width);
-                var y = sprite.worldPosition.y - (sprite.anchor.y * sprite.height);
-                var onImageY = (pointer.y - y);
-                var onImageX = (pointer.x - x);
-                var frameWidth = osrs_chunk.gameConfig.chunkSize * sprite.worldScale.x;
-                var row = Math.floor((onImageY / frameWidth));
-                var column = Math.floor((onImageX / frameWidth));
-                var pos = new Phaser.Point(column, row);
-                this.selectTile(osrs_chunk.gameConfig.chunkIDs.getChunkIDFromPosition(pos));
-            };
-            return ChunkSelector;
-        }());
-        control.ChunkSelector = ChunkSelector;
-    })(control = osrs_chunk.control || (osrs_chunk.control = {}));
-})(osrs_chunk || (osrs_chunk = {}));
-///<reference path="../control/ChunkSelector.ts"/>
-/**
  * Created by jespe on 2019-02-12.
  */
 var osrs_chunk;
 (function (osrs_chunk) {
     var view;
     (function (view) {
-        var ChunkSelector = osrs_chunk.control.ChunkSelector;
         var SceneBuilder = /** @class */ (function () {
             function SceneBuilder(game) {
                 SceneBuilder.game = game;
@@ -172,7 +107,11 @@ var osrs_chunk;
                 scene.cameraRoot = SceneBuilder.addGroup('cameraRoot', scene.layoutRoot);
                 scene.sceneRoot = SceneBuilder.addGroup('sceneRoot', scene.cameraRoot);
                 // Custom layers
-                scene.backGroundLayer = SceneBuilder.addGroup('backgroundLayer', scene.sceneRoot, -(osrs_chunk.gameConfig.gameSize.width / 2), -(osrs_chunk.gameConfig.gameSize.height / 2));
+                var x = -(osrs_chunk.gameConfig.gameSize.width / 2);
+                var y = -(osrs_chunk.gameConfig.gameSize.height / 2);
+                scene.backGroundLayer = SceneBuilder.addGroup('backgroundLayer', scene.sceneRoot, x, y);
+                scene.backGroundLayerActive = SceneBuilder.addGroup('backgroundLayerActive', scene.sceneRoot, x, y);
+                scene.backGroundLayerOverlay = SceneBuilder.addGroup('backgroundLayerOverlay', scene.sceneRoot, x, y);
             };
             /**
              * Setup the background
@@ -180,6 +119,7 @@ var osrs_chunk;
              */
             SceneBuilder.prototype.buildBackground = function (scene) {
                 scene.chunkMap = SceneBuilder.addImage('chunkMap', 'chunks', '0', scene.backGroundLayer, 0, 0);
+                scene.chunkMap.tint = 0x383838;
             };
             /**
              * Setup the menu
@@ -193,7 +133,7 @@ var osrs_chunk;
              * @param scene
              */
             SceneBuilder.prototype.buildControls = function (scene) {
-                scene.chunkSelector = new ChunkSelector(SceneBuilder.game);
+                scene.chunkSelector = new osrs_chunk.control.ChunkSelector(SceneBuilder.game);
             };
             return SceneBuilder;
         }());
@@ -556,14 +496,8 @@ var osrs_chunk;
          * Preload game assets here.
          */
         PreloaderState.prototype.preload = function () {
-            // this.game.load.image('spinButtonImage', 'assets/sprites/Button.png');
-            // this.game.load.image('chunkMap', 'assets/images/chunkmapPowerOf2.png');
+            this.game.load.image('border', 'assets/images/Border.png');
             this.game.load.spritesheet('chunks', 'assets/images/chunkmapPowerOf2.png', osrs_chunk.gameConfig.chunkSize, osrs_chunk.gameConfig.chunkSize);
-            // this.game.load.spritesheet('chunks', 'assets/images/chunkmapPowerOf2Numbered.png', gameConfig.chunkSize, gameConfig.chunkSize, undefined, 1, undefined);
-            // this.game.load.spritesheet('chunks', 'assets/images/chunkmapNonPadded.png', gameConfig.chunkSize, gameConfig.chunkSize, undefined, 1, undefined);
-            // this.game.load.image('chunkMap', 'assets/images/chunkmapPowerOf2.png');
-            // this.game.load.image('chunkMap1', 'assets/images/chunkmapPowerOf2_1.png',);
-            // this.game.load.image('chunkMap2', 'assets/images/chunkmapPowerOf2_2.png',);
         };
         /**
          * Move into the game state here.
@@ -612,6 +546,89 @@ var osrs_chunk;
     }(Phaser.Game));
     osrs_chunk.Game = Game;
 })(osrs_chunk || (osrs_chunk = {}));
+///<reference path="../scene/SceneBuilder.ts"/>
+/**
+ * Created by jespe on 2019-02-14.
+ */
+var osrs_chunk;
+(function (osrs_chunk) {
+    var control;
+    (function (control) {
+        var SceneBuilder = osrs_chunk.view.SceneBuilder;
+        var chunkIDs = osrs_chunk.gameConfig.chunkIDs;
+        var ChunkSelector = /** @class */ (function () {
+            function ChunkSelector(game) {
+                this.selectedTile = -1;
+                this.selectTile = function (chunkID) {
+                    console.log('No chunk selection action set.');
+                };
+                window['printChunks'] = function () {
+                    var border = '-------------';
+                    console.log(border);
+                    var point = new Phaser.Point(0, 0);
+                    for (var i = 0; i < 10; i++) {
+                        point.x = point.y = i;
+                        console.log(point);
+                        var spriteIndex = osrs_chunk.gameConfig.chunkIDs.getSpriteIndexFromPosition(point);
+                        console.log('spriteIndex : ' + spriteIndex);
+                        var chunkID = osrs_chunk.gameConfig.chunkIDs.getChunkIDFromSpriteIndex(spriteIndex);
+                        console.log('chunkID : ' + chunkID);
+                        console.log(osrs_chunk.gameConfig.chunkIDs.getPositionFromChunkID(chunkID));
+                        console.log(border);
+                    }
+                };
+                this.game = game;
+                this.selectorBorder = SceneBuilder.addImage('selectorBorder', 'border', undefined, this.game.scene.backGroundLayerOverlay);
+                this.selectorBorder.width = this.selectorBorder.height = osrs_chunk.gameConfig.chunkSize * 1.1;
+                this.selectorBorder.visible = false;
+                this.selectorBorder.exists = false;
+                this.selectedTileMapImage = SceneBuilder.addImage('selectedTileMapImage', 'chunks', 0, this.game.scene.backGroundLayerActive);
+                this.selectedTileMapImage.visible = false;
+                this.selectedTileMapImage.exists = false;
+                var chunkMap = this.game.scene.chunkMap;
+                chunkMap.inputEnabled = true;
+                chunkMap.events.onInputDown.add(this.onBoardClick, this);
+            }
+            ChunkSelector.prototype.highlightTile = function (chunkID) {
+                this.selectedTile = chunkID;
+                var pos = chunkIDs.getPositionFromChunkID(chunkID);
+                var sprite = this.game.scene.chunkMap;
+                var x = sprite.position.x - (sprite.anchor.x * sprite.width);
+                var y = sprite.position.y - (sprite.anchor.y * sprite.height);
+                var imagePos = new Phaser.Point(x + (osrs_chunk.gameConfig.chunkSize * (pos.x + 0.5)), y + (osrs_chunk.gameConfig.chunkSize * (pos.y + 0.5)));
+                this.selectorBorder.position.x = imagePos.x;
+                this.selectorBorder.position.y = imagePos.y;
+                this.selectorBorder.visible = true;
+                this.selectorBorder.exists = true;
+                this.selectedTileMapImage.position.x = imagePos.x;
+                this.selectedTileMapImage.position.y = imagePos.y;
+                this.selectedTileMapImage.frame = chunkIDs.getSpriteIndexFromChunkID(chunkID);
+                this.selectedTileMapImage.visible = true;
+                this.selectedTileMapImage.exists = true;
+            };
+            ChunkSelector.prototype.deselectTile = function () {
+                this.selectedTileMapImage.visible = false;
+                this.selectedTileMapImage.exists = false;
+                this.selectorBorder.visible = false;
+                this.selectorBorder.exists = false;
+                this.selectedTile = -1;
+            };
+            ChunkSelector.prototype.onBoardClick = function (sprite, pointer) {
+                var x = sprite.worldPosition.x - (sprite.anchor.x * sprite.width);
+                var y = sprite.worldPosition.y - (sprite.anchor.y * sprite.height);
+                var onImageY = (pointer.y - y);
+                var onImageX = (pointer.x - x);
+                var frameWidth = osrs_chunk.gameConfig.chunkSize * sprite.worldScale.x;
+                var row = Math.floor((onImageY / frameWidth));
+                var column = Math.floor((onImageX / frameWidth));
+                var pos = new Phaser.Point(column, row);
+                this.selectTile(chunkIDs.getChunkIDFromPosition(pos));
+            };
+            return ChunkSelector;
+        }());
+        control.ChunkSelector = ChunkSelector;
+    })(control = osrs_chunk.control || (osrs_chunk.control = {}));
+})(osrs_chunk || (osrs_chunk = {}));
 /**
  * Created by jespe on 2019-02-13.
  */
@@ -638,14 +655,21 @@ var osrs_chunk;
                 graphics.endFill();
                 this.selectedTileImage = view.SceneBuilder.addImage('chunkMap', 'chunks', 48, this.menuLayer, 0, 0);
                 this.selectedTileImage.anchor.set(0, 0);
-                this.game.scene.chunkSelector.selectTile = function (chunkID) {
-                    _this.selectedTileImage.frame = osrs_chunk.gameConfig.chunkIDs.getSpriteIndexFromChunkID(chunkID);
-                    _this.game.scene.chunkSelector.selectTileByTilePos(chunkID);
+                var chunkSelector = this.game.scene.chunkSelector;
+                chunkSelector.selectTile = function (chunkID) {
+                    if (chunkSelector.selectedTile !== chunkID) {
+                        _this.selectedTileImage.frame = osrs_chunk.gameConfig.chunkIDs.getSpriteIndexFromChunkID(chunkID);
+                        _this.selectedTileImage.visible = true;
+                        _this.selectedTileImage.exists = true;
+                        chunkSelector.highlightTile(chunkID);
+                    }
+                    else {
+                        _this.selectedTileImage.visible = false;
+                        _this.selectedTileImage.exists = false;
+                        chunkSelector.deselectTile();
+                    }
                 };
             }
-            Menu.prototype.selectTileBySpriteIndex = function (tileIndex) {
-                this.selectedTileImage.frame = tileIndex;
-            };
             return Menu;
         }());
         view.Menu = Menu;

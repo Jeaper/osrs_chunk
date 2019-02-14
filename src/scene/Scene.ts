@@ -18,11 +18,13 @@ module osrs_chunk.view {
 		public sceneRoot : Phaser.Group;
 
 		public backGroundLayer : Phaser.Group;
+		public backGroundLayerActive : Phaser.Group;
+		public backGroundLayerOverlay : Phaser.Group;
 		/**
 		 * Managers
 		 */
 		public menu : Menu;
-		public chunkSelector : ChunkSelector;
+		public chunkSelector : osrs_chunk.control.ChunkSelector;
 
 		/**
 		 * Scene elements
