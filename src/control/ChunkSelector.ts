@@ -36,7 +36,8 @@ module osrs_chunk.control {
 			this.game = game;
 
 			this.selectorBorder = SceneBuilder.addImage('selectorBorder', 'border', undefined, this.game.scene.backGroundLayerOverlay);
-			this.selectorBorder.width = this.selectorBorder.height = gameConfig.chunkSize * 1.1;
+			this.selectorBorder.alpha = 0.7;
+			this.selectorBorder.width = this.selectorBorder.height = gameConfig.chunkSize * 1.2;
 			this.selectorBorder.visible = false;
 			this.selectorBorder.exists = false;
 
