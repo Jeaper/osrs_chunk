@@ -81,6 +81,9 @@ module osrs_chunk.view {
 			this.buildBackground(scene);
 			this.buildControls(scene);
 			this.buildMenu(scene);
+			this.buildMapOverlay(scene);
+
+			scene.setSceneObjectsUpdateOnlyExistingChildrenFlag();
 			return scene;
 		}
 
@@ -124,6 +127,7 @@ module osrs_chunk.view {
 		 */
 		private buildMenu(scene : Scene) : void {
 			scene.menu = new Menu(SceneBuilder.game);
+			scene.chunkNotes = new osrs_chunk.data.ChunkNotes(SceneBuilder.game);
 
 		}
 
@@ -133,6 +137,15 @@ module osrs_chunk.view {
 		 */
 		private buildControls(scene : Scene) : void {
 			scene.chunkSelector = new osrs_chunk.control.ChunkSelector(SceneBuilder.game);
+
+		}
+
+		/**
+		 * Setup the MapOverlay
+		 * @param scene
+		 */
+		private buildMapOverlay(scene : Scene) : void {
+			scene.mapOverlay = new osrs_chunk.view.MapOverlay(SceneBuilder.game);
 
 		}
 	}

@@ -11,5 +11,8 @@
 	"dependencies": {
 		"express": "^4.13.3",
 		"opener": "^1.4.1"
+	},
+	"devDependencies": {
+		"@orange-games/phaser-input": "^2.0.5"
 	}
 }

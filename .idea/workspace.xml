@@ -2,10 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91b31066-20e1-4c89-b8ff-fabc2cb1f887" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/phaserinput/phaser-input.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/phaserinput/phaser-input.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/phaserinput/phaser-input.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/phaserinput/phaser-input.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/scene/MapOverlay.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/utils/Collections.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game.js" afterPath="$PROJECT_DIR$/game.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game.js.map" afterPath="$PROJECT_DIR$/game.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/require_config.js" afterPath="$PROJECT_DIR$/require_config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.ts" afterPath="$PROJECT_DIR$/src/Game.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/control/ChunkSelector.ts" afterPath="$PROJECT_DIR$/src/control/ChunkSelector.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scene/Menu.ts" afterPath="$PROJECT_DIR$/src/scene/Menu.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scene/Scene.ts" afterPath="$PROJECT_DIR$/src/scene/Scene.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scene/SceneBuilder.ts" afterPath="$PROJECT_DIR$/src/scene/SceneBuilder.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,73 +37,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GameState.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GameState.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Scene.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scene/Scene.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+            <state relative-caret-position="333">
+              <caret line="28" column="39" lean-forward="true" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PreloaderState.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PreloaderState.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="46" lean-forward="false" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SceneBuilder.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scene/SceneBuilder.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="108" column="0" lean-forward="true" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Menu.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Menu.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scene/Menu.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
-              <folding>
-                <element signature="n#!!doc;n#osrs_chunk#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="game.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="23" lean-forward="true" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameConfig.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/config/GameConfig.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="35" column="8" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+            <state relative-caret-position="51">
+              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
               <folding>
                 <element signature="n#!!doc;n#osrs_chunk#0" expanded="false" />
               </folding>
@@ -100,28 +62,85 @@
       <file leaf-file-name="ChunkSelector.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/control/ChunkSelector.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="38" column="44" lean-forward="true" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
+            <state relative-caret-position="220">
+              <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MovableCamera.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/control/MovableCamera.ts">
+      <file leaf-file-name="ChunkNotes.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state relative-caret-position="323">
+              <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+              <folding>
+                <element signature="n#!!doc;n#osrs_chunk#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SceneBuilder.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scene/SceneBuilder.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="125" column="23" lean-forward="false" selection-start-line="125" selection-start-column="23" selection-end-line="125" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="Game.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Game.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="29" column="6" lean-forward="true" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
+            <state relative-caret-position="476">
+              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="phaser.d.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/phaser/phaser.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="5147" column="8" lean-forward="false" selection-start-line="5147" selection-start-column="8" selection-end-line="5147" selection-end-column="8" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1545119744939" expanded="true" signature="184:186" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="phaser-input.d.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/@orange-games/phaser-input/build/phaser-input.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="39" column="14" lean-forward="false" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="phaser-input.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/phaserinput/phaser-input.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="624" column="21" lean-forward="false" selection-start-line="624" selection-start-column="17" selection-end-line="624" selection-end-column="21" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="phaser-input.d.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/phaserinput/phaser-input.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="136" column="10" lean-forward="false" selection-start-line="136" selection-start-column="10" selection-end-line="136" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -148,6 +167,10 @@
       <find>720</find>
       <find>cursors</find>
       <find>pos2 =</find>
+      <find>enter</find>
+      <find>onenter</find>
+      <find>this.value</find>
+      <find>line</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -175,23 +198,28 @@
         <option value="$PROJECT_DIR$/libs/phaser/p2.d.ts" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/preloader_manifest.js" />
-        <option value="$PROJECT_DIR$/require_config.js" />
         <option value="$PROJECT_DIR$/src/BootState.ts" />
         <option value="$PROJECT_DIR$/src/SceneLayoutManager.ts" />
         <option value="$PROJECT_DIR$/src/Scene.ts" />
         <option value="$PROJECT_DIR$/src/SceneBuilder.ts" />
         <option value="$PROJECT_DIR$/src/control/MovableCamera.ts" />
-        <option value="$PROJECT_DIR$/src/Game.ts" />
         <option value="$PROJECT_DIR$/src/scene/SceneLayoutManager.ts" />
         <option value="$PROJECT_DIR$/src/GameState.ts" />
         <option value="$PROJECT_DIR$/assets/config/GameConfig.ts" />
         <option value="$PROJECT_DIR$/src/game.css" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/src/scene/Scene.ts" />
-        <option value="$PROJECT_DIR$/src/scene/Menu.ts" />
         <option value="$PROJECT_DIR$/src/PreloaderState.ts" />
-        <option value="$PROJECT_DIR$/src/scene/SceneBuilder.ts" />
+        <option value="$PROJECT_DIR$/src/utils/Collections.ts" />
         <option value="$PROJECT_DIR$/src/control/ChunkSelector.ts" />
+        <option value="$PROJECT_DIR$/src/scene/MapOverlay.ts" />
+        <option value="$PROJECT_DIR$/libs/phaser-input/phaser-input.d.ts" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/require_config.js" />
+        <option value="$PROJECT_DIR$/src/Game.ts" />
+        <option value="$PROJECT_DIR$/src/scene/Scene.ts" />
+        <option value="$PROJECT_DIR$/src/scene/SceneBuilder.ts" />
+        <option value="$PROJECT_DIR$/src/scene/Menu.ts" />
+        <option value="$PROJECT_DIR$/libs/phaserinput/phaser-input.js" />
+        <option value="$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts" />
       </list>
     </option>
   </component>
@@ -325,6 +353,158 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chunkdata" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="@orange-games" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phaser-input" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="@orange-games" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phaser-input" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phaserinput" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phaser-input.js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NestingTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phaserinput" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phaser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osrs_chunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -357,7 +537,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Thunderkick" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="nodejs_interpreter_path" value="f:/libs/nodejs/node" />
-    <property name="SearchEverywhereHistoryKey" value="prelo&#9;FILE&#9;file://F:/repo/osrs_chunk/src/PreloaderState.ts&#10;ind&#9;FILE&#9;file://F:/repo/osrs_chunk/index.html&#10;gameco&#9;FILE&#9;file://F:/repo/osrs_chunk/assets/config/GameConfig.ts&#10;scene&#9;FILE&#9;file://F:/repo/osrs_chunk/src/SceneBuilder.ts&#10;sc&#9;FILE&#9;file://F:/repo/osrs_chunk/src/Scene.ts&#10;game&#9;FILE&#9;file://F:/repo/osrs_chunk/src/Game.ts&#10;sce&#9;FILE&#9;file://F:/repo/osrs_chunk/src/SceneLayoutManager.ts&#10;inde&#9;FILE&#9;file://F:/repo/osrs_chunk/index.html" />
+    <property name="SearchEverywhereHistoryKey" value="chunk&#9;FILE&#9;file://F:/repo/osrs_chunk/src/chunkdata/ChunkNotes.ts&#10;sceneb&#9;FILE&#9;file://F:/repo/osrs_chunk/src/scene/SceneBuilder.ts&#10;sce&#9;FILE&#9;file://F:/repo/osrs_chunk/src/scene/Scene.ts&#10;note&#9;FILE&#9;file://F:/repo/osrs_chunk/src/chunkdata/ChunkNotes.ts&#10;ind&#9;FILE&#9;file://F:/repo/osrs_chunk/index.html&#10;menu&#9;null&#9;null&#10;prelo&#9;FILE&#9;file://F:/repo/osrs_chunk/src/PreloaderState.ts&#10;gameco&#9;FILE&#9;file://F:/repo/osrs_chunk/assets/config/GameConfig.ts&#10;scene&#9;FILE&#9;file://F:/repo/osrs_chunk/src/SceneBuilder.ts&#10;sc&#9;FILE&#9;file://F:/repo/osrs_chunk/src/Scene.ts&#10;game&#9;FILE&#9;file://F:/repo/osrs_chunk/src/Game.ts&#10;inde&#9;FILE&#9;file://F:/repo/osrs_chunk/index.html" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.tslint" value="C:\Users\jespe\AppData\Roaming\npm\node_modules\tslint" />
@@ -366,6 +546,9 @@
     <property name="js.last.introduce.type" value="CONST" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\repo\osrs_chunk\libs\phaser-input" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\repo\osrs_chunk\src\scene" />
     </key>
@@ -468,12 +651,12 @@
       <workItem from="1550006589284" duration="8547000" />
       <workItem from="1550075914454" duration="16596000" />
       <workItem from="1550128865844" duration="195000" />
-      <workItem from="1550166059988" duration="11497000" />
+      <workItem from="1550166059988" duration="16762000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38124000" />
+    <option name="totallyTimeSpent" value="43389000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -488,10 +671,11 @@
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25237092" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -503,7 +687,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -518,51 +701,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/BootState.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameState.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="53" lean-forward="true" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scene/Scene.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="30" lean-forward="true" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="31" lean-forward="true" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PreloaderState.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scene/SceneBuilder.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1615">
@@ -743,13 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/require_config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="108" column="11" lean-forward="true" selection-start-line="108" selection-start-column="11" selection-end-line="108" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/preloader_manifest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -778,30 +909,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/phaser/phaser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="903159">
           <caret line="53154" column="44" lean-forward="false" selection-start-line="53154" selection-start-column="44" selection-end-line="53154" selection-end-column="44" />
           <folding>
             <marker date="1545128637113" expanded="false" signature="0:2" ph="/*...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/phaser/phaser.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19720">
-          <caret line="1161" column="16" lean-forward="false" selection-start-line="1161" selection-start-column="16" selection-end-line="1161" selection-end-column="16" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1545119744939" expanded="true" signature="184:186" ph="..." />
           </folding>
         </state>
       </provider>
@@ -832,14 +945,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="29" column="6" lean-forward="true" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/config/GameConfig.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
@@ -858,42 +963,133 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scene/Scene.ts">
+    <entry file="file://$PROJECT_DIR$/src/control/MovableCamera.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+        <state relative-caret-position="17">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/Collections.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="45" column="50" lean-forward="false" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="50" />
+          <folding>
+            <element signature="n#!!doc;n#osrs_chunk#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scene/MapOverlay.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="30" lean-forward="false" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc;n#osrs_chunk#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="53" lean-forward="false" selection-start-line="7" selection-start-column="53" selection-end-line="7" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/require_config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="26" column="21" lean-forward="true" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scene/SceneBuilder.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="108" column="0" lean-forward="true" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/control/MovableCamera.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="544">
+          <caret line="125" column="23" lean-forward="false" selection-start-line="125" selection-start-column="23" selection-end-line="125" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/control/ChunkSelector.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="38" column="44" lean-forward="true" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
+        <state relative-caret-position="220">
+          <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scene/Menu.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+        <state relative-caret-position="51">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!doc;n#osrs_chunk#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@orange-games/phaser-input/build/phaser-input.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="39" column="14" lean-forward="false" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scene/Scene.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="28" column="39" lean-forward="true" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/phaserinput/phaser-input.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="624" column="21" lean-forward="false" selection-start-line="624" selection-start-column="17" selection-end-line="624" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/phaser/phaser.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="5147" column="8" lean-forward="false" selection-start-line="5147" selection-start-column="8" selection-end-line="5147" selection-end-column="8" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1545119744939" expanded="true" signature="184:186" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/phaserinput/phaser-input.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="136" column="10" lean-forward="false" selection-start-line="136" selection-start-column="10" selection-end-line="136" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
           <folding>
             <element signature="n#!!doc;n#osrs_chunk#0" expanded="false" />
           </folding>

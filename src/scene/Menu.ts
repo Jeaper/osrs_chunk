@@ -5,11 +5,11 @@ module osrs_chunk.view {
 	import game = PIXI.game;
 	export class Menu {
 
-		private menuLayer : Phaser.Group;
+		public menuLayer : Phaser.Group;
 		private readonly game;
 
 		private selectedTileImage : Phaser.Image;
-		private selectedTileMapImage : Phaser.Image;
+
 		constructor(game : osrs_chunk.Game) {
 			this.game = game;
 			const gameWidth = gameConfig.gameSize.width;
@@ -49,6 +49,19 @@ module osrs_chunk.view {
 					chunkSelector.deselectTile();
 				}
 			};
+
+			this.addUnlockButton();
+		}
+
+
+		private addUnlockButton() {
+			const button = this.game.add.button(0, 200, 'border', () => {
+				this.game.scene.mapOverlay.toggleChunk(this.game.scene.chunkSelector.selectedTile);
+			}, this, 2, 1, 0, undefined, this.menuLayer);
+			button.width = 200;
+			button.height = 100;
+
+
 		}
 
 

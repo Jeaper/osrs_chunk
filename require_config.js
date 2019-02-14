@@ -48,7 +48,9 @@ requirejs.config({
 		phaser: [
 			osrs_chunk.requireBaseUrl + "/libs/phaser/phaser"
 		],
-
+		phaserinput: [
+			osrs_chunk.requireBaseUrl + "/libs/phaserinput/phaser-input"
+		],
 		game: [
 			osrs_chunk.requireBaseUrl + "/game"
 		],
@@ -107,6 +109,9 @@ requirejs.config({
 		// ],
 	},
 	shim: {
+		phaserinput:{
+			deps:["phaser"]
+		},
 		tappy: {
 			deps: ["jquery"]
 		},
@@ -134,6 +139,7 @@ osrs_chunk.loadDependencies = function (ownsPage, callback) {
 		require(["preloaderManifest"], function () {
 			require(["jquery", "phaser"], function () {
 				require(["tappy", 'TweenLite', "tweenmax", "timelinemax", "draggable", "throwprops", "easepack", "brim", "scream", "perfectscrollbar", "textfill",
+					"phaserinput",
 					"customease", "CSSPlugin"], function () {
 					// "jquerygsap","customease","attrplugin","bezierplugin","colorpropsplugin","cssplugin","cssruleplugin","directionalrotation","easel","endarray","modifiersplugin","pixiplugin","raphaelplugin","roundpropsplugin","scrolltoplugin","textplugin" ], function () {
 					require(["game"], function () {

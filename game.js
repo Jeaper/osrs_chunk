@@ -95,6 +95,8 @@ var osrs_chunk;
                 this.buildBackground(scene);
                 this.buildControls(scene);
                 this.buildMenu(scene);
+                this.buildMapOverlay(scene);
+                scene.setSceneObjectsUpdateOnlyExistingChildrenFlag();
                 return scene;
             };
             /**
@@ -127,6 +129,7 @@ var osrs_chunk;
              */
             SceneBuilder.prototype.buildMenu = function (scene) {
                 scene.menu = new view.Menu(SceneBuilder.game);
+                scene.chunkNotes = new osrs_chunk.data.ChunkNotes(SceneBuilder.game);
             };
             /**
              * Setup the controls
@@ -134,6 +137,13 @@ var osrs_chunk;
              */
             SceneBuilder.prototype.buildControls = function (scene) {
                 scene.chunkSelector = new osrs_chunk.control.ChunkSelector(SceneBuilder.game);
+            };
+            /**
+             * Setup the MapOverlay
+             * @param scene
+             */
+            SceneBuilder.prototype.buildMapOverlay = function (scene) {
+                scene.mapOverlay = new osrs_chunk.view.MapOverlay(SceneBuilder.game);
             };
             return SceneBuilder;
         }());
@@ -519,7 +529,7 @@ var osrs_chunk;
     var PreloaderState = osrs_chunk.PreloaderState;
     var GameState = osrs_chunk.GameState;
     function createGame() {
-        window['game'] = new osrs_chunk.Game();
+        var game = window['game'] = new osrs_chunk.Game();
     }
     osrs_chunk.createGame = createGame;
     var Game = /** @class */ (function (_super) {
@@ -531,7 +541,7 @@ var osrs_chunk;
                 width: osrs_chunk.gameConfig.gameSize.width,
                 height: osrs_chunk.gameConfig.gameSize.height,
                 renderer: Phaser.WEBGL,
-                parent: 'content'
+                parent: 'content',
             };
             _this = _super.call(this, config) || this;
             _this['clearBeforeRender'] = false; // Fix for iOS10 bug causing flicker.
@@ -545,6 +555,53 @@ var osrs_chunk;
         return Game;
     }(Phaser.Game));
     osrs_chunk.Game = Game;
+})(osrs_chunk || (osrs_chunk = {}));
+/**
+ * Created by jespe on 2019-02-14.
+ */
+var osrs_chunk;
+(function (osrs_chunk) {
+    var data;
+    (function (data) {
+        var ChunkNotes = /** @class */ (function () {
+            function ChunkNotes(game) {
+                this.game = game;
+                this.game.add.plugin(PhaserInput.Plugin);
+                var convertedGame = game;
+                var input = convertedGame.add.inputField(10, 90, {
+                    font: '18px Arial',
+                    fill: '#212121',
+                    fontWeight: undefined,
+                    width: 150,
+                    height: 300,
+                    padding: 8,
+                    borderWidth: 1,
+                    borderColor: '#000',
+                    borderRadius: 6,
+                    placeHolder: 'Notes',
+                    type: PhaserInput.InputType.text,
+                    maxLines: 10,
+                }, this.game.scene.menu.menuLayer);
+                input.focusOutOnEnter = false;
+                // input.inputOptions.maxLines = false;
+                this.game.scene.menu.menuLayer.add(input);
+                this.inputBox = input;
+            }
+            ChunkNotes.prototype.setNote = function (chunkID, notes) {
+                this.chunkNotes[chunkID] = notes;
+            };
+            ChunkNotes.prototype.getNote = function (chunkID) {
+                if (this.chunkNotes[chunkID] !== undefined) {
+                    return this.chunkNotes[chunkID];
+                }
+                else {
+                    return '';
+                }
+            };
+            return ChunkNotes;
+        }());
+        data.ChunkNotes = ChunkNotes;
+    })(data = osrs_chunk.data || (osrs_chunk.data = {}));
 })(osrs_chunk || (osrs_chunk = {}));
 ///<reference path="../scene/SceneBuilder.ts"/>
 /**
@@ -592,11 +649,7 @@ var osrs_chunk;
             }
             ChunkSelector.prototype.highlightTile = function (chunkID) {
                 this.selectedTile = chunkID;
-                var pos = chunkIDs.getPositionFromChunkID(chunkID);
-                var sprite = this.game.scene.chunkMap;
-                var x = sprite.position.x - (sprite.anchor.x * sprite.width);
-                var y = sprite.position.y - (sprite.anchor.y * sprite.height);
-                var imagePos = new Phaser.Point(x + (osrs_chunk.gameConfig.chunkSize * (pos.x + 0.5)), y + (osrs_chunk.gameConfig.chunkSize * (pos.y + 0.5)));
+                var imagePos = this.getSpritePosition(chunkID);
                 this.selectorBorder.position.x = imagePos.x;
                 this.selectorBorder.position.y = imagePos.y;
                 this.selectorBorder.visible = true;
@@ -607,6 +660,14 @@ var osrs_chunk;
                 this.selectedTileMapImage.visible = true;
                 this.selectedTileMapImage.exists = true;
             };
+            ChunkSelector.prototype.getSpritePosition = function (chunkID) {
+                var pos = chunkIDs.getPositionFromChunkID(chunkID);
+                var sprite = this.game.scene.chunkMap;
+                var x = sprite.position.x - (sprite.anchor.x * sprite.width);
+                var y = sprite.position.y - (sprite.anchor.y * sprite.height);
+                var imagePos = new Phaser.Point(x + (osrs_chunk.gameConfig.chunkSize * (pos.x + 0.5)), y + (osrs_chunk.gameConfig.chunkSize * (pos.y + 0.5)));
+                return imagePos;
+            };
             ChunkSelector.prototype.deselectTile = function () {
                 this.selectedTileMapImage.visible = false;
                 this.selectedTileMapImage.exists = false;
@@ -615,11 +676,14 @@ var osrs_chunk;
                 this.selectedTile = -1;
             };
             ChunkSelector.prototype.onBoardClick = function (sprite, pointer) {
+                if (pointer.x >= (this.game.width * osrs_chunk.gameConfig.mapAreaScale)) {
+                    return;
+                }
                 var x = sprite.worldPosition.x - (sprite.anchor.x * sprite.width);
                 var y = sprite.worldPosition.y - (sprite.anchor.y * sprite.height);
                 var onImageY = (pointer.y - y);
                 var onImageX = (pointer.x - x);
-                var frameWidth = osrs_chunk.gameConfig.chunkSize * sprite.worldScale.x;
+                var frameWidth = osrs_chunk.gameConfig.chunkSize;
                 var row = Math.floor((onImageY / frameWidth));
                 var column = Math.floor((onImageX / frameWidth));
                 var pos = new Phaser.Point(column, row);
@@ -633,6 +697,45 @@ var osrs_chunk;
 /**
  * Created by jespe on 2019-02-13.
  */
+/**
+ * Created by jespe on 2019-02-14.
+ */
+var osrs_chunk;
+(function (osrs_chunk) {
+    var view;
+    (function (view) {
+        var MapOverlay = /** @class */ (function () {
+            function MapOverlay(game) {
+                this.game = game;
+                this.activeChunks = [];
+                this.chunkImages = {};
+            }
+            MapOverlay.prototype.toggleChunk = function (chunkID) {
+                if (this.chunkImages[chunkID] === undefined) {
+                    this.activateChunk(chunkID);
+                }
+                else {
+                    this.deActivateChunk(chunkID);
+                }
+            };
+            MapOverlay.prototype.activateChunk = function (chunkID) {
+                if (this.chunkImages[chunkID] === undefined) {
+                    var imagePos = this.game.scene.chunkSelector.getSpritePosition(chunkID);
+                    this.chunkImages[chunkID] = view.SceneBuilder.addImage("ActiveChunk_" + chunkID, 'chunks', osrs_chunk.gameConfig.chunkIDs.getSpriteIndexFromChunkID(chunkID), this.game.scene.backGroundLayerActive, imagePos.x, imagePos.y);
+                }
+            };
+            MapOverlay.prototype.deActivateChunk = function (chunkID) {
+                if (this.chunkImages[chunkID] !== undefined) {
+                    this.chunkImages[chunkID].destroy();
+                    this.chunkImages[chunkID] = undefined;
+                }
+                delete this.chunkImages[chunkID];
+            };
+            return MapOverlay;
+        }());
+        view.MapOverlay = MapOverlay;
+    })(view = osrs_chunk.view || (osrs_chunk.view = {}));
+})(osrs_chunk || (osrs_chunk = {}));
 /**
  * Created by jespe on 2019-02-13.
  */
@@ -670,7 +773,16 @@ var osrs_chunk;
                         chunkSelector.deselectTile();
                     }
                 };
+                this.addUnlockButton();
             }
+            Menu.prototype.addUnlockButton = function () {
+                var _this = this;
+                var button = this.game.add.button(0, 200, 'border', function () {
+                    _this.game.scene.mapOverlay.toggleChunk(_this.game.scene.chunkSelector.selectedTile);
+                }, this, 2, 1, 0, undefined, this.menuLayer);
+                button.width = 200;
+                button.height = 100;
+            };
             return Menu;
         }());
         view.Menu = Menu;
@@ -715,5 +827,128 @@ var osrs_chunk;
         }());
         view.Scene = Scene;
     })(view = osrs_chunk.view || (osrs_chunk.view = {}));
+})(osrs_chunk || (osrs_chunk = {}));
+/**
+ * Created by jespe on 2019-02-14.
+ */
+var osrs_chunk;
+(function (osrs_chunk) {
+    var utils;
+    (function (utils) {
+        var collections;
+        (function (collections) {
+            function filledArray(l, f) {
+                var ret = [];
+                for (var i = 0; i < l; i++) {
+                    ret.push(f);
+                }
+                return ret;
+            }
+            collections.filledArray = filledArray;
+            function swapMap(map) {
+                // Flips the key value pair of a map.
+                var ret = {};
+                for (var key in map) {
+                    if (map.hasOwnProperty(key)) {
+                        ret[map[key]] = Number(key);
+                    }
+                }
+                return ret;
+            }
+            collections.swapMap = swapMap;
+            function removeElementFromArray(array, element) {
+                var index = array.indexOf(element);
+                if (index > -1) {
+                    array.splice(index, 1);
+                }
+            }
+            collections.removeElementFromArray = removeElementFromArray;
+            // export type MapType<T extends {[k : string] : any}> = T extends {[k : string] : infer U} ? U : never;
+            /**
+             * Binary search
+             */
+            /**
+             * Returns the index of the closest element to the value
+             * Method which returns the number to compare in the element
+             * @param arr
+             * @param target
+             * @param getValue
+             * @return The index of the closest element in the array
+             * (-1 if empty)
+             */
+            function findClosestElement(arr, target, getValue) {
+                if (getValue === void 0) { getValue = function (element) {
+                    return Number(element);
+                }; }
+                /**
+                 * Method to compare which one
+                 * is the more close We find the
+                 * closest by taking the difference
+                 * between the target and both
+                 * values. It assumes that val2 is
+                 * greater than val1 and target
+                 * lies between these two.
+                 */
+                var getClosestIndex = function (index1, index2, target) {
+                    if (target - getValue(arr[index1]) >= getValue(arr[index2]) - target) {
+                        return index1;
+                    }
+                    else {
+                        return index2;
+                    }
+                };
+                var n = arr.length;
+                /**
+                 * Corner cases
+                 */
+                if (arr.length === 0) {
+                    return -1;
+                }
+                else if (target <= getValue(arr[0])) {
+                    return 0;
+                }
+                else if (target >= getValue(arr[n - 1])) {
+                    return n - 1;
+                }
+                /**
+                 *  Doing binary search
+                 */
+                var i = 0;
+                var mid = 0;
+                var j = n;
+                while (i < j) {
+                    mid = Math.round((i + j) / 2);
+                    if (getValue(arr[mid]) === target) {
+                        return mid;
+                    }
+                    /* If target is less
+                     than array element,
+                     then search in left */
+                    if (target < getValue(arr[mid])) {
+                        /* If target is greater
+                         than previous to mid,
+                         return closest of two */
+                        if (mid > 0 && target > getValue(arr[mid - 1])) {
+                            return getClosestIndex(mid - 1, mid, target);
+                        }
+                        /* Repeat for left half */
+                        j = mid;
+                    }
+                    /* If target is
+                     greater than mid */
+                    else {
+                        if (mid < n - 1 && target < getValue(arr[mid + 1])) {
+                            return getClosestIndex(mid, mid + 1, target);
+                        }
+                        i = mid + 1; // update i
+                    }
+                }
+                /* Only single element
+                 left after search */
+                return mid;
+            }
+            collections.findClosestElement = findClosestElement;
+        })(collections = utils.collections || (utils.collections = {}));
+    })(utils = osrs_chunk.utils || (osrs_chunk.utils = {}));
 })(osrs_chunk || (osrs_chunk = {}));
 //# sourceMappingURL=game.js.map

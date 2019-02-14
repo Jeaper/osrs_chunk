@@ -11,7 +11,8 @@ module osrs_chunk {
 	import SceneBuilder = osrs_chunk.view.SceneBuilder;
 
 	export function createGame() : void {
-		window['game'] = new osrs_chunk.Game() as osrs_chunk.Game;
+		const game = window['game'] = new osrs_chunk.Game() as osrs_chunk.Game;
+
 	}
 
 	export class Game extends Phaser.Game {
@@ -24,7 +25,8 @@ module osrs_chunk {
 				width : gameConfig.gameSize.width,
 				height : gameConfig.gameSize.height,
 				renderer : Phaser.WEBGL,
-				parent : 'content'
+				parent : 'content',
+
 			};
 			super(config);
 

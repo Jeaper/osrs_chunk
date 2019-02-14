@@ -60,6 +60,21 @@ module osrs_chunk.control {
 		public highlightTile(chunkID : number) {
 			this.selectedTile = chunkID;
 
+			const imagePos = this.getSpritePosition(chunkID);
+			this.selectorBorder.position.x = imagePos.x;
+			this.selectorBorder.position.y = imagePos.y;
+			this.selectorBorder.visible = true;
+			this.selectorBorder.exists = true;
+
+			this.selectedTileMapImage.position.x = imagePos.x;
+			this.selectedTileMapImage.position.y = imagePos.y;
+			this.selectedTileMapImage.frame = chunkIDs.getSpriteIndexFromChunkID(chunkID);
+			this.selectedTileMapImage.visible = true;
+			this.selectedTileMapImage.exists = true;
+
+		}
+
+		public getSpritePosition(chunkID : number) {
 			const pos = chunkIDs.getPositionFromChunkID(chunkID);
 
 			const sprite = this.game.scene.chunkMap;
@@ -71,16 +86,7 @@ module osrs_chunk.control {
 				x + (gameConfig.chunkSize * (pos.x + 0.5)),
 				y + (gameConfig.chunkSize * (pos.y + 0.5)),
 			);
-			this.selectorBorder.position.x = imagePos.x;
-			this.selectorBorder.position.y = imagePos.y;
-			this.selectorBorder.visible = true;
-			this.selectorBorder.exists = true;
-
-			this.selectedTileMapImage.position.x = imagePos.x;
-			this.selectedTileMapImage.position.y = imagePos.y;
-			this.selectedTileMapImage.frame = chunkIDs.getSpriteIndexFromChunkID(chunkID);
-			this.selectedTileMapImage.visible = true;
-			this.selectedTileMapImage.exists = true;
+			return imagePos;
 		}
 
 		public deselectTile() {
@@ -89,17 +95,20 @@ module osrs_chunk.control {
 			this.selectorBorder.visible = false;
 			this.selectorBorder.exists = false;
 			this.selectedTile = -1;
-
 		}
 
 
 		private onBoardClick(sprite : Phaser.Sprite, pointer : Phaser.Pointer) {
+			if (pointer.x >= (this.game.width * gameConfig.mapAreaScale)) {
+				return;
+			}
+
 			const x = sprite.worldPosition.x - (sprite.anchor.x * sprite.width);
 			const y = sprite.worldPosition.y - (sprite.anchor.y * sprite.height);
 
 			const onImageY = (pointer.y - y);
 			const onImageX = (pointer.x - x);
-			const frameWidth = gameConfig.chunkSize * sprite.worldScale.x;
+			const frameWidth = gameConfig.chunkSize;
 			const row = Math.floor((onImageY / frameWidth));
 			const column = Math.floor((onImageX / frameWidth));
 

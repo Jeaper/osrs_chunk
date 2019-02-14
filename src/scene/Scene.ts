@@ -6,6 +6,7 @@ module osrs_chunk.view {
 
 
 	import ChunkSelector = osrs_chunk.control.ChunkSelector;
+	import ChunkNotes = osrs_chunk.data.ChunkNotes;
 	export class Scene {
 
 		/**
@@ -24,7 +25,9 @@ module osrs_chunk.view {
 		 * Managers
 		 */
 		public menu : Menu;
-		public chunkSelector : osrs_chunk.control.ChunkSelector;
+		public chunkSelector : ChunkSelector;
+		public mapOverlay : MapOverlay;
+		public chunkNotes : ChunkNotes;
 
 		/**
 		 * Scene elements
