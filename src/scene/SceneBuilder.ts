@@ -1,3 +1,4 @@
+///<reference path="../control/ChunkSelector.ts"/>
 /**
  * Created by jespe on 2019-02-12.
  */
@@ -5,13 +6,14 @@ module osrs_chunk.view {
 	import DisplayObject = PIXI.DisplayObject;
 	import DisplayObjectContainer = PIXI.DisplayObjectContainer;
 	import game = PIXI.game;
+	import ChunkSelector = osrs_chunk.control.ChunkSelector;
 
 
 	export class SceneBuilder {
-		public static _game : osrs_chunk.Game;
+		public static game : osrs_chunk.Game;
 
 		constructor(game : osrs_chunk.Game) {
-			SceneBuilder._game = game;
+			SceneBuilder.game = game;
 		}
 
 		/**
@@ -23,7 +25,7 @@ module osrs_chunk.view {
 		 * @param addToStage If the Group should be added to the stage
 		 */
 		public static addGroup(name : string, parent : DisplayObject | DisplayObjectContainer, x : number = 0, y : number = 0, addToStage : boolean = false) : Phaser.Group {
-			const group = SceneBuilder._game.add.group(parent, name, addToStage, false);
+			const group = SceneBuilder.game.add.group(parent, name, addToStage, false);
 			group.x = x;
 			group.y = y;
 			return group;
@@ -41,10 +43,10 @@ module osrs_chunk.view {
 		 * @param h Overrides the height of the Image.
 		 */
 		public static addImage(name : string, key : string, frame : string | number, parent : Phaser.Group, x : number = 0, y : number = 0, w : number = undefined, h : number = undefined) : Phaser.Image {
-			const img = SceneBuilder._game.add.image(x, y, key, frame, parent);
+			const img = SceneBuilder.game.add.image(x, y, key, frame, parent);
 			img.name = name;
-			img.width = (w || img.width) * SceneBuilder._game.scene.scaleFactor;
-			img.height = (h || img.height) * SceneBuilder._game.scene.scaleFactor;
+			img.width = (w || img.width) * SceneBuilder.game.scene.scaleFactor;
+			img.height = (h || img.height) * SceneBuilder.game.scene.scaleFactor;
 			img.anchor.set(0.5, 0.5);
 			return img;
 		}
@@ -61,10 +63,10 @@ module osrs_chunk.view {
 		 * @param h Overrides the height of the Sprite.
 		 */
 		public static addSprite(name : string, key : string, frame : string | number, parent : Phaser.Group, x : number = 0, y : number = 0, w : number = undefined, h : number = undefined) : Phaser.Sprite {
-			const spr = SceneBuilder._game.add.sprite(x, y, key, frame, parent);
+			const spr = SceneBuilder.game.add.sprite(x, y, key, frame, parent);
 			spr.name = name;
-			spr.width = (w || spr.width) * SceneBuilder._game.scene.scaleFactor;
-			spr.height = (h || spr.height) * SceneBuilder._game.scene.scaleFactor;
+			spr.width = (w || spr.width) * SceneBuilder.game.scene.scaleFactor;
+			spr.height = (h || spr.height) * SceneBuilder.game.scene.scaleFactor;
 			spr.anchor.set(0.5, 0.5);
 			return spr;
 		}
@@ -73,11 +75,12 @@ module osrs_chunk.view {
 		 * Initialize the whole scene.
 		 */
 		public buildScene() : osrs_chunk.view.Scene {
-			const game = SceneBuilder._game;
+			const game = SceneBuilder.game;
 			const scene : view.Scene = game.scene = new view.Scene(game);
 
 			this.buildLayers(scene);
 			this.buildBackground(scene);
+			this.buildControls(scene);
 			this.buildMenu(scene);
 			return scene;
 		}
@@ -112,15 +115,21 @@ module osrs_chunk.view {
 		}
 
 		/**
-		 * Setup the background
+		 * Setup the menu
 		 * @param scene
 		 */
 		private buildMenu(scene : Scene) : void {
-			scene.menu = new Menu(SceneBuilder._game);
-
+			scene.menu = new Menu(SceneBuilder.game);
 
 		}
 
+		/**
+		 * Setup the controls
+		 * @param scene
+		 */
+		private buildControls(scene : Scene) : void {
+			scene.chunkSelector = new ChunkSelector(SceneBuilder.game);
 
+		}
 	}
 }

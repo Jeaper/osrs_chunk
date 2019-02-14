@@ -19,6 +19,7 @@ module osrs_chunk {
 			console.log('Game is running!');
 			// Init
 			const game = this.game = window['game'] as osrs_chunk.Game;
+
 			const sceneBuilder = new SceneBuilder(game);
 			game.scene = sceneBuilder.buildScene();
 			const sceneLayoutManager = new SceneLayoutManager(game);

@@ -5,6 +5,7 @@
 module osrs_chunk.view {
 
 
+	import ChunkSelector = osrs_chunk.control.ChunkSelector;
 	export class Scene {
 
 		/**
@@ -21,6 +22,7 @@ module osrs_chunk.view {
 		 * Managers
 		 */
 		public menu : Menu;
+		public chunkSelector : ChunkSelector;
 
 		/**
 		 * Scene elements
