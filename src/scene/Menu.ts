@@ -7,13 +7,16 @@ module osrs_chunk.view {
 
 		public menuLayer : Phaser.Group;
 		private readonly game;
-
 		private selectedTileImage : Phaser.Image;
+
+		public readonly menuWidth:number = 200;
 
 		constructor(game : osrs_chunk.Game) {
 			this.game = game;
 			const gameWidth = gameConfig.gameSize.width;
 			const gameHeight = gameConfig.gameSize.height;
+
+			this.menuWidth = gameWidth * (1 - gameConfig.mapAreaScale);
 			// this.menuLayer = SceneBuilder.addGroup('menuLayer', game.scene.topRoot, -gameWidth / 2 , -gameHeight / 2);
 			this.menuLayer = SceneBuilder.addGroup('menuLayer', game.scene.topRoot,
 				(gameWidth * gameConfig.mapAreaScale) - (gameWidth / 2),
@@ -27,7 +30,7 @@ module osrs_chunk.view {
 			graphics.drawRect(
 				0,
 				0,
-				gameWidth * (1 - gameConfig.mapAreaScale),
+				this.menuWidth,
 				gameHeight,
 			);
 			graphics.endFill();
@@ -55,11 +58,12 @@ module osrs_chunk.view {
 
 
 		private addUnlockButton() {
-			const button = this.game.add.button(0, 200, 'border', () => {
+			const button = this.game.add.button(this.menuWidth/2, 170, 'border', () => {
 				this.game.scene.mapOverlay.toggleChunk(this.game.scene.chunkSelector.selectedTile);
 			}, this, 2, 1, 0, undefined, this.menuLayer);
-			button.width = 200;
-			button.height = 100;
+			button.anchor.set(0.5,0);
+			button.width = this.menuWidth/2;
+			button.height = 50;
 
 
 		}

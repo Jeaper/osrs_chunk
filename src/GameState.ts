@@ -27,24 +27,24 @@ module osrs_chunk {
 		}// create()
 
 		public update() : void {
-			const game = this.game as osrs_chunk.Game;
-
-
-			const speed = 1.2;
-			const movementSpeed = speed * game.time.physicsElapsedMS;
-			if (game.input.keyboard.isDown(KeyCode.UP) || game.input.keyboard.isDown(KeyCode.W)) {
-				game.scene.cameraRoot.y += movementSpeed;
-			}
-			else if (game.input.keyboard.isDown(KeyCode.DOWN) || game.input.keyboard.isDown(KeyCode.S)) {
-				game.scene.cameraRoot.y -= movementSpeed;
-			}
-
-			if (game.input.keyboard.isDown(KeyCode.LEFT) || game.input.keyboard.isDown(KeyCode.A)) {
-				game.scene.cameraRoot.x += movementSpeed;
-			}
-			else if (game.input.keyboard.isDown(KeyCode.RIGHT) || game.input.keyboard.isDown(KeyCode.D)) {
-				game.scene.cameraRoot.x -= movementSpeed;
-			}
+			// const game = this.game as osrs_chunk.Game;
+			//
+			//
+			// const speed = 1.2;
+			// const movementSpeed = speed * game.time.physicsElapsedMS;
+			// if (game.input.keyboard.isDown(KeyCode.UP) || game.input.keyboard.isDown(KeyCode.W)) {
+			// 	game.scene.cameraRoot.y += movementSpeed;
+			// }
+			// else if (game.input.keyboard.isDown(KeyCode.DOWN) || game.input.keyboard.isDown(KeyCode.S)) {
+			// 	game.scene.cameraRoot.y -= movementSpeed;
+			// }
+			//
+			// if (game.input.keyboard.isDown(KeyCode.LEFT) || game.input.keyboard.isDown(KeyCode.A)) {
+			// 	game.scene.cameraRoot.x += movementSpeed;
+			// }
+			// else if (game.input.keyboard.isDown(KeyCode.RIGHT) || game.input.keyboard.isDown(KeyCode.D)) {
+			// 	game.scene.cameraRoot.x -= movementSpeed;
+			// }
 
 		}
 

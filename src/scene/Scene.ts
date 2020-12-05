@@ -39,6 +39,7 @@ module osrs_chunk.view {
 		 */
 		public scaleFactor : number = 1;
 		private readonly _game : osrs_chunk.Game;
+		public moveableCamera : osrs_chunk.control.MovableCamera;
 
 		constructor(game : osrs_chunk.Game) {
 			this._game = game;

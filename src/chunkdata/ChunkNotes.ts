@@ -2,11 +2,9 @@
  * Created by jespe on 2019-02-14.
  */
 module osrs_chunk.data {
-	import MapOf = osrs_chunk.utils.collections.MapOf;
-	import AtLeast = osrs_chunk.utils.collections.AtLeast;
 	export class ChunkNotes {
 
-		public chunkNotes : MapOf<string>;
+		public chunkNotes : Record<string,string>;
 		public inputBox : PhaserInput.InputBox;
 
 		private readonly game : osrs_chunk.Game;
@@ -17,11 +15,12 @@ module osrs_chunk.data {
 
 			const convertedGame = game as any;
 
-			const input = convertedGame.add.inputField(10, 90, {
+			const borderWidth = 20;
+			const input = convertedGame.add.inputField(borderWidth/2, 250, {
 					font : '18px Arial',
 					fill : '#212121',
 					fontWeight : undefined,
-					width : 150,
+					width : this.game.scene.menu.menuWidth-borderWidth*2,
 					height : 300,
 					padding : 8,
 					borderWidth : 1,
@@ -31,14 +30,16 @@ module osrs_chunk.data {
 					type : PhaserInput.InputType.text,
 					maxLines : 10,
 				},
-				this.game.scene.menu.menuLayer
+				// this.game.scene.menu.menuLayer
 			);
 			input.focusOutOnEnter = false;
 			// input.inputOptions.maxLines = false;
 			this.game.scene.menu.menuLayer.add(input);
 
-
 			this.inputBox = input;
+			this.inputBox.events.onInputDown.add(()=>{
+				console.log('aaaaaaah')
+			});
 		}
 
 		public setNote(chunkID : number, notes : string) {

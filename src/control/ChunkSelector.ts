@@ -59,6 +59,7 @@ module osrs_chunk.control {
 
 		public highlightTile(chunkID : number) {
 			this.selectedTile = chunkID;
+			console.log('chunkID ',chunkID,gameConfig.chunkIDs.getPositionFromChunkID(chunkID),this.getSpritePosition(chunkID))
 
 			const imagePos = this.getSpritePosition(chunkID);
 			this.selectorBorder.position.x = imagePos.x;

@@ -1,11 +1,14 @@
+///<reference path="../control/MovableCamera.ts"/>
 /**
  * Created by jespe on 2019-02-12.
  */
+
 module osrs_chunk.view {
 	import DisplayObject = PIXI.DisplayObject;
 	import DisplayObjectContainer = PIXI.DisplayObjectContainer;
 	import game = PIXI.game;
 	import Color = Phaser.Color;
+	import MovableCamera = osrs_chunk.control.MovableCamera;
 
 
 	export class SceneBuilder {
@@ -80,8 +83,14 @@ module osrs_chunk.view {
 			this.buildLayers(scene);
 			this.buildBackground(scene);
 			this.buildControls(scene);
-			this.buildMenu(scene);
 			this.buildMapOverlay(scene);
+			this.buildMenu(scene);
+			this.buildCamera(scene);
+
+			const defaultChunkId = game.scene.mapOverlay.getDefaultChunkId();
+			scene.chunkSelector.selectTile(defaultChunkId);
+			scene.moveableCamera.focusOnChunk(defaultChunkId,0);
+
 
 			scene.setSceneObjectsUpdateOnlyExistingChildrenFlag();
 			return scene;
@@ -118,6 +127,16 @@ module osrs_chunk.view {
 		private buildBackground(scene : Scene) : void {
 			scene.chunkMap = SceneBuilder.addImage('chunkMap', 'chunks', '0', scene.backGroundLayer, 0, 0);
 			scene.chunkMap.tint = 0x383838;
+			scene.chunkMap.anchor.set(0.5,0.5);
+
+		}
+
+		/**
+		 * Setup the background
+		 * @param scene
+		 */
+		private buildCamera(scene : Scene) : void {
+			scene.moveableCamera = new MovableCamera(SceneBuilder.game,scene.cameraRoot);
 
 		}
 

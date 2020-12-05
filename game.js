@@ -1,8 +1,19 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -12,12 +23,82 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /**
+ * Created by jespe on 2019-02-13.
+ */
+var KeyCode = Phaser.KeyCode;
+var osrs_chunk;
+(function (osrs_chunk) {
+    var control;
+    (function (control) {
+        var MovableCamera = /** @class */ (function () {
+            function MovableCamera(game, cameraRoot) {
+                var _this = this;
+                this.game = game;
+                this.cameraRoot = cameraRoot;
+                var dummyTarget = { dummy: 0 };
+                TweenMax.fromTo(dummyTarget, 1, {
+                    dummy: 0,
+                }, {
+                    dummy: 1,
+                    repeat: -1,
+                    yoyo: true,
+                    onUpdate: function () {
+                        _this.update();
+                    }
+                });
+            }
+            MovableCamera.prototype.getMapPositionOfChunk = function (chunkID) {
+                // const pos = gameConfig.chunkIDs.getPositionFromChunkID(chunkID);
+                var pos = this.game.scene.chunkSelector.getSpritePosition(chunkID);
+                // pos.x+=(gameConfig.gameSize.width / 2);
+                // pos.y +=(gameConfig.gameSize.height / 2);
+                var centerSpritePos = {
+                    x: 506, y: 370,
+                };
+                pos.x -= centerSpritePos.x;
+                pos.y -= centerSpritePos.y;
+                return new Phaser.Point(-pos.x, -pos.y);
+            };
+            MovableCamera.prototype.focusOnChunk = function (chunkID, moveTime) {
+                if (moveTime === void 0) { moveTime = 0.5; }
+                this.focusOnPosition(this.getMapPositionOfChunk(chunkID), moveTime);
+            };
+            MovableCamera.prototype.focusOnPosition = function (point, moveTime) {
+                if (moveTime === void 0) { moveTime = 0.5; }
+                TweenMax.to(this.cameraRoot.position, moveTime, __assign(__assign({}, point), { ease: Linear.easeInOut }));
+                console.log(point);
+            };
+            MovableCamera.prototype.update = function () {
+                var game = this.game;
+                var speed = 1.2;
+                var movementSpeed = speed * game.time.physicsElapsedMS;
+                if (game.input.keyboard.isDown(KeyCode.UP) || game.input.keyboard.isDown(KeyCode.W)) {
+                    this.cameraRoot.y += movementSpeed;
+                }
+                else if (game.input.keyboard.isDown(KeyCode.DOWN) || game.input.keyboard.isDown(KeyCode.S)) {
+                    this.cameraRoot.y -= movementSpeed;
+                }
+                if (game.input.keyboard.isDown(KeyCode.LEFT) || game.input.keyboard.isDown(KeyCode.A)) {
+                    this.cameraRoot.x += movementSpeed;
+                }
+                else if (game.input.keyboard.isDown(KeyCode.RIGHT) || game.input.keyboard.isDown(KeyCode.D)) {
+                    this.cameraRoot.x -= movementSpeed;
+                }
+            };
+            return MovableCamera;
+        }());
+        control.MovableCamera = MovableCamera;
+    })(control = osrs_chunk.control || (osrs_chunk.control = {}));
+})(osrs_chunk || (osrs_chunk = {}));
+///<reference path="../control/MovableCamera.ts"/>
+/**
  * Created by jespe on 2019-02-12.
  */
 var osrs_chunk;
 (function (osrs_chunk) {
     var view;
     (function (view) {
+        var MovableCamera = osrs_chunk.control.MovableCamera;
         var SceneBuilder = /** @class */ (function () {
             function SceneBuilder(game) {
                 SceneBuilder.game = game;
@@ -94,8 +175,12 @@ var osrs_chunk;
                 this.buildLayers(scene);
                 this.buildBackground(scene);
                 this.buildControls(scene);
-                this.buildMenu(scene);
                 this.buildMapOverlay(scene);
+                this.buildMenu(scene);
+                this.buildCamera(scene);
+                var defaultChunkId = game.scene.mapOverlay.getDefaultChunkId();
+                scene.chunkSelector.selectTile(defaultChunkId);
+                scene.moveableCamera.focusOnChunk(defaultChunkId, 0);
                 scene.setSceneObjectsUpdateOnlyExistingChildrenFlag();
                 return scene;
             };
@@ -122,6 +207,14 @@ var osrs_chunk;
             SceneBuilder.prototype.buildBackground = function (scene) {
                 scene.chunkMap = SceneBuilder.addImage('chunkMap', 'chunks', '0', scene.backGroundLayer, 0, 0);
                 scene.chunkMap.tint = 0x383838;
+                scene.chunkMap.anchor.set(0.5, 0.5);
+            };
+            /**
+             * Setup the background
+             * @param scene
+             */
+            SceneBuilder.prototype.buildCamera = function (scene) {
+                scene.moveableCamera = new MovableCamera(SceneBuilder.game, scene.cameraRoot);
             };
             /**
              * Setup the menu
@@ -168,6 +261,10 @@ var osrs_chunk;
         gameConfig.chunks = {
             width: 43,
             height: 25,
+        };
+        gameConfig.KNOWN_LOCATIONS = {
+            LUMBRIDGE: 12850,
+            GRAND_EXCHANGE: 12598
         };
         /**
          * starting at top left 4671, 256 for each x,  -1 for each y cool
@@ -448,7 +545,6 @@ var osrs_chunk;
 (function (osrs_chunk) {
     var SceneBuilder = osrs_chunk.view.SceneBuilder;
     var SceneLayoutManager = osrs_chunk.view.SceneLayoutManager;
-    var KeyCode = Phaser.KeyCode;
     var GlobalVar = /** @class */ (function () {
         function GlobalVar() {
         }
@@ -474,21 +570,24 @@ var osrs_chunk;
             // Draw background
         }; // create()
         GameState.prototype.update = function () {
-            var game = this.game;
-            var speed = 1.2;
-            var movementSpeed = speed * game.time.physicsElapsedMS;
-            if (game.input.keyboard.isDown(KeyCode.UP) || game.input.keyboard.isDown(KeyCode.W)) {
-                game.scene.cameraRoot.y += movementSpeed;
-            }
-            else if (game.input.keyboard.isDown(KeyCode.DOWN) || game.input.keyboard.isDown(KeyCode.S)) {
-                game.scene.cameraRoot.y -= movementSpeed;
-            }
-            if (game.input.keyboard.isDown(KeyCode.LEFT) || game.input.keyboard.isDown(KeyCode.A)) {
-                game.scene.cameraRoot.x += movementSpeed;
-            }
-            else if (game.input.keyboard.isDown(KeyCode.RIGHT) || game.input.keyboard.isDown(KeyCode.D)) {
-                game.scene.cameraRoot.x -= movementSpeed;
-            }
+            // const game = this.game as osrs_chunk.Game;
+            //
+            //
+            // const speed = 1.2;
+            // const movementSpeed = speed * game.time.physicsElapsedMS;
+            // if (game.input.keyboard.isDown(KeyCode.UP) || game.input.keyboard.isDown(KeyCode.W)) {
+            // 	game.scene.cameraRoot.y += movementSpeed;
+            // }
+            // else if (game.input.keyboard.isDown(KeyCode.DOWN) || game.input.keyboard.isDown(KeyCode.S)) {
+            // 	game.scene.cameraRoot.y -= movementSpeed;
+            // }
+            //
+            // if (game.input.keyboard.isDown(KeyCode.LEFT) || game.input.keyboard.isDown(KeyCode.A)) {
+            // 	game.scene.cameraRoot.x += movementSpeed;
+            // }
+            // else if (game.input.keyboard.isDown(KeyCode.RIGHT) || game.input.keyboard.isDown(KeyCode.D)) {
+            // 	game.scene.cameraRoot.x -= movementSpeed;
+            // }
         };
         return GameState;
     }(Phaser.State));
@@ -568,11 +667,12 @@ var osrs_chunk;
                 this.game = game;
                 this.game.add.plugin(PhaserInput.Plugin);
                 var convertedGame = game;
-                var input = convertedGame.add.inputField(10, 90, {
+                var borderWidth = 20;
+                var input = convertedGame.add.inputField(borderWidth / 2, 250, {
                     font: '18px Arial',
                     fill: '#212121',
                     fontWeight: undefined,
-                    width: 150,
+                    width: this.game.scene.menu.menuWidth - borderWidth * 2,
                     height: 300,
                     padding: 8,
                     borderWidth: 1,
@@ -581,11 +681,14 @@ var osrs_chunk;
                     placeHolder: 'Notes',
                     type: PhaserInput.InputType.text,
                     maxLines: 10,
-                }, this.game.scene.menu.menuLayer);
+                });
                 input.focusOutOnEnter = false;
                 // input.inputOptions.maxLines = false;
                 this.game.scene.menu.menuLayer.add(input);
                 this.inputBox = input;
+                this.inputBox.events.onInputDown.add(function () {
+                    console.log('aaaaaaah');
+                });
             }
             ChunkNotes.prototype.setNote = function (chunkID, notes) {
                 this.chunkNotes[chunkID] = notes;
@@ -649,6 +752,7 @@ var osrs_chunk;
             }
             ChunkSelector.prototype.highlightTile = function (chunkID) {
                 this.selectedTile = chunkID;
+                console.log('chunkID ', chunkID, osrs_chunk.gameConfig.chunkIDs.getPositionFromChunkID(chunkID), this.getSpritePosition(chunkID));
                 var imagePos = this.getSpritePosition(chunkID);
                 this.selectorBorder.position.x = imagePos.x;
                 this.selectorBorder.position.y = imagePos.y;
@@ -695,9 +799,6 @@ var osrs_chunk;
     })(control = osrs_chunk.control || (osrs_chunk.control = {}));
 })(osrs_chunk || (osrs_chunk = {}));
 /**
- * Created by jespe on 2019-02-13.
- */
-/**
  * Created by jespe on 2019-02-14.
  */
 var osrs_chunk;
@@ -731,6 +832,16 @@ var osrs_chunk;
                 }
                 delete this.chunkImages[chunkID];
             };
+            MapOverlay.prototype.getDefaultChunkId = function () {
+                if (this.game.scene.mapOverlay.activeChunks.length > 0) {
+                    // Find center tile.
+                    return this.game.scene.activateChunks[0];
+                }
+                else {
+                    //Lumbridge
+                    return 12850;
+                }
+            };
             return MapOverlay;
         }());
         view.MapOverlay = MapOverlay;
@@ -746,16 +857,18 @@ var osrs_chunk;
         var Menu = /** @class */ (function () {
             function Menu(game) {
                 var _this = this;
+                this.menuWidth = 200;
                 this.game = game;
                 var gameWidth = osrs_chunk.gameConfig.gameSize.width;
                 var gameHeight = osrs_chunk.gameConfig.gameSize.height;
+                this.menuWidth = gameWidth * (1 - osrs_chunk.gameConfig.mapAreaScale);
                 // this.menuLayer = SceneBuilder.addGroup('menuLayer', game.scene.topRoot, -gameWidth / 2 , -gameHeight / 2);
                 this.menuLayer = view.SceneBuilder.addGroup('menuLayer', game.scene.topRoot, (gameWidth * osrs_chunk.gameConfig.mapAreaScale) - (gameWidth / 2), -gameHeight / 2);
                 this.menuLayer.alpha = 0.7;
                 var graphics = game.add.graphics(0, 0);
                 this.menuLayer.add(graphics);
                 graphics.beginFill(0xfffffff, 1);
-                graphics.drawRect(0, 0, gameWidth * (1 - osrs_chunk.gameConfig.mapAreaScale), gameHeight);
+                graphics.drawRect(0, 0, this.menuWidth, gameHeight);
                 graphics.endFill();
                 this.selectedTileImage = view.SceneBuilder.addImage('chunkMap', 'chunks', 48, this.menuLayer, 0, 0);
                 this.selectedTileImage.anchor.set(0, 0);
@@ -777,11 +890,12 @@ var osrs_chunk;
             }
             Menu.prototype.addUnlockButton = function () {
                 var _this = this;
-                var button = this.game.add.button(0, 200, 'border', function () {
+                var button = this.game.add.button(this.menuWidth / 2, 170, 'border', function () {
                     _this.game.scene.mapOverlay.toggleChunk(_this.game.scene.chunkSelector.selectedTile);
                 }, this, 2, 1, 0, undefined, this.menuLayer);
-                button.width = 200;
-                button.height = 100;
+                button.anchor.set(0.5, 0);
+                button.width = this.menuWidth / 2;
+                button.height = 50;
             };
             return Menu;
         }());

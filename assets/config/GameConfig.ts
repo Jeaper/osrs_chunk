@@ -17,7 +17,10 @@ module osrs_chunk.gameConfig {
 		width : 43,
 		height : 25,
 	};
-
+	export const KNOWN_LOCATIONS ={
+		LUMBRIDGE : 12850,
+		GRAND_EXCHANGE : 12598
+	}
 	/**
 	 * starting at top left 4671, 256 for each x,  -1 for each y cool
 	 */

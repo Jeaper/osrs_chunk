@@ -2,12 +2,12 @@
  * Created by jespe on 2019-02-14.
  */
 module osrs_chunk.view {
-	import MapOf = osrs_chunk.utils.collections.MapOf;
+
 	export class MapOverlay {
 
 		public activeChunks : number[];
 
-		private chunkImages : MapOf<Phaser.Image>;
+		private chunkImages : Record<string, Phaser.Image>;
 
 		private readonly game;
 
@@ -46,6 +46,17 @@ module osrs_chunk.view {
 				this.chunkImages[chunkID] = undefined;
 			}
 			delete this.chunkImages[chunkID];
+		}
+
+		public getDefaultChunkId() : number {
+			if (this.game.scene.mapOverlay.activeChunks.length > 0) {
+				// Find center tile.
+				return this.game.scene.activateChunks[0];
+			}
+			else {
+				//Lumbridge
+				return 12850;
+			}
 		}
 	}
 }
