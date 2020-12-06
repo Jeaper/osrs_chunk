@@ -104,12 +104,15 @@ module osrs_chunk.control {
 				return;
 			}
 
-			const x = sprite.worldPosition.x - (sprite.anchor.x * sprite.width);
-			const y = sprite.worldPosition.y - (sprite.anchor.y * sprite.height);
+			const zoomScale = this.game.scene.cameraRoot.scale.x;
+			const worldX = sprite.worldPosition.x;
+			const worldY = sprite.worldPosition.y;
+			const x = worldX - (sprite.anchor.x * sprite.width*zoomScale);
 
+			const y = worldY - (sprite.anchor.y * sprite.height*zoomScale);
 			const onImageY = (pointer.y - y);
 			const onImageX = (pointer.x - x);
-			const frameWidth = gameConfig.chunkSize;
+			const frameWidth = gameConfig.chunkSize * zoomScale;
 			const row = Math.floor((onImageY / frameWidth));
 			const column = Math.floor((onImageX / frameWidth));
 

@@ -68,7 +68,7 @@ var osrs_chunk;
                         },
                         set: function (v) {
                             valueHolder.x = v;
-                            cameraRoot.x = v * cameraRoot.scale.x;
+                            cameraRoot.x = v * (1 / cameraRoot.scale.x);
                         }
                     },
                     y: {
@@ -77,7 +77,7 @@ var osrs_chunk;
                         },
                         set: function (v) {
                             valueHolder.y = v;
-                            cameraRoot.y = v * cameraRoot.scale.y;
+                            cameraRoot.y = v * (1 / cameraRoot.scale.y);
                         }
                     }
                 });
@@ -895,11 +895,14 @@ var osrs_chunk;
                 if (pointer.x >= (this.game.width * osrs_chunk.gameConfig.mapAreaScale)) {
                     return;
                 }
-                var x = sprite.worldPosition.x - (sprite.anchor.x * sprite.width);
-                var y = sprite.worldPosition.y - (sprite.anchor.y * sprite.height);
+                var zoomScale = this.game.scene.cameraRoot.scale.x;
+                var worldX = sprite.worldPosition.x;
+                var worldY = sprite.worldPosition.y;
+                var x = worldX - (sprite.anchor.x * sprite.width * zoomScale);
+                var y = worldY - (sprite.anchor.y * sprite.height * zoomScale);
                 var onImageY = (pointer.y - y);
                 var onImageX = (pointer.x - x);
-                var frameWidth = osrs_chunk.gameConfig.chunkSize;
+                var frameWidth = osrs_chunk.gameConfig.chunkSize * zoomScale;
                 var row = Math.floor((onImageY / frameWidth));
                 var column = Math.floor((onImageX / frameWidth));
                 var pos = new Phaser.Point(column, row);

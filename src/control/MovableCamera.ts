@@ -51,7 +51,7 @@ module osrs_chunk.control {
 					},
 					set(v : number) {
 						valueHolder.x = v;
-						cameraRoot.x = v * cameraRoot.scale.x;
+						cameraRoot.x = v * (1/ cameraRoot.scale.x);
 					}
 				},
 				y : {
@@ -60,7 +60,7 @@ module osrs_chunk.control {
 					},
 					set(v : number) {
 						valueHolder.y = v;
-						cameraRoot.y = v * cameraRoot.scale.y;
+						cameraRoot.y = v *(1 / cameraRoot.scale.y);
 					}
 				}
 			});
