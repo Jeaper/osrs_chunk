@@ -50,10 +50,9 @@ var osrs_chunk;
             MovableCamera.prototype.getMapPositionOfChunk = function (chunkID) {
                 // const pos = gameConfig.chunkIDs.getPositionFromChunkID(chunkID);
                 var pos = this.game.scene.chunkSelector.getSpritePosition(chunkID);
-                // pos.x+=(gameConfig.gameSize.width / 2);
-                // pos.y +=(gameConfig.gameSize.height / 2);
                 var centerSpritePos = {
-                    x: 506, y: 370,
+                    x: (osrs_chunk.gameConfig.gameSize.width / 2) * osrs_chunk.gameConfig.mapAreaScale,
+                    y: (osrs_chunk.gameConfig.gameSize.height / 2),
                 };
                 pos.x -= centerSpritePos.x;
                 pos.y -= centerSpritePos.y;
@@ -178,9 +177,12 @@ var osrs_chunk;
                 this.buildMapOverlay(scene);
                 this.buildMenu(scene);
                 this.buildCamera(scene);
-                var defaultChunkId = game.scene.mapOverlay.getDefaultChunkId();
+                var defaultChunkId = game.saveData.getDefaultChunkId();
                 scene.chunkSelector.selectTile(defaultChunkId);
                 scene.moveableCamera.focusOnChunk(defaultChunkId, 0);
+                for (var chunkId in game.saveData.activeChunks) {
+                    scene.mapOverlay.activateChunk(Number(chunkId));
+                }
                 scene.setSceneObjectsUpdateOnlyExistingChildrenFlag();
                 return scene;
             };
@@ -305,6 +307,30 @@ var osrs_chunk;
                 }
                 return new Phaser.Point(x, y);
             },
+            getCenterChunk: function (chunkIds) {
+                var centerPositionOfTiles = { x: 0, y: 0 };
+                chunkIds.forEach(function (chunkId) {
+                    var position = gameConfig.chunkIDs.getPositionFromChunkID(Number(chunkId));
+                    centerPositionOfTiles.x += position.x;
+                    centerPositionOfTiles.y += position.y;
+                });
+                centerPositionOfTiles.x /= chunkIds.length;
+                centerPositionOfTiles.y /= chunkIds.length;
+                var centerChunk = {
+                    chunkId: 0,
+                    delta: 999999
+                };
+                chunkIds.forEach(function (chunkId) {
+                    var position = gameConfig.chunkIDs.getPositionFromChunkID(Number(chunkId));
+                    // Math.
+                    var delta = Math.abs(centerPositionOfTiles.x - position.x) + Math.abs(centerPositionOfTiles.y - position.y);
+                    if (delta < centerChunk.delta) {
+                        centerChunk.delta = delta;
+                        centerChunk.chunkId = Number(chunkId);
+                    }
+                });
+                return Number(centerChunk.chunkId);
+            }
         };
     })(gameConfig = osrs_chunk.gameConfig || (osrs_chunk.gameConfig = {}));
 })(osrs_chunk || (osrs_chunk = {}));
@@ -618,15 +644,69 @@ var osrs_chunk;
     }(Phaser.State));
     osrs_chunk.PreloaderState = PreloaderState;
 })(osrs_chunk || (osrs_chunk = {}));
+var osrs_chunk;
+(function (osrs_chunk) {
+    var data;
+    (function (data) {
+        var ChunkStatus;
+        (function (ChunkStatus) {
+            ChunkStatus[ChunkStatus["LOCKED"] = 0] = "LOCKED";
+            ChunkStatus[ChunkStatus["UNLOCKED"] = 1] = "UNLOCKED";
+            ChunkStatus[ChunkStatus["POSSIBLE_OUTCOME"] = 2] = "POSSIBLE_OUTCOME";
+        })(ChunkStatus = data.ChunkStatus || (data.ChunkStatus = {}));
+        var SaveData = /** @class */ (function () {
+            function SaveData(game) {
+                this.activeChunks = {};
+                this.chunkNotes = {};
+                this._game = game;
+                this.loadFile();
+            }
+            SaveData.prototype.saveFile = function () {
+                var file = {
+                    u: this.activeChunks,
+                    n: this.chunkNotes,
+                };
+                localStorage.setItem('saveFile', JSON.stringify(file));
+            };
+            SaveData.prototype.loadFile = function () {
+                try {
+                    var file = JSON.parse(localStorage.getItem('saveFile'));
+                    this.chunkNotes = file.n;
+                    this.activeChunks = file.u;
+                    console.log(file);
+                }
+                catch (e) {
+                    console.log('No save file found in local storage, starting fresh.');
+                    this.chunkNotes = {};
+                    this.activeChunks = {};
+                }
+            };
+            SaveData.prototype.getDefaultChunkId = function () {
+                var activeChunkKeys = Object.keys(this.activeChunks);
+                if (activeChunkKeys.length > 0) {
+                    return osrs_chunk.gameConfig.chunkIDs.getCenterChunk(activeChunkKeys);
+                }
+                else {
+                    //Lumbridge
+                    return 12850;
+                }
+            };
+            return SaveData;
+        }());
+        data.SaveData = SaveData;
+    })(data = osrs_chunk.data || (osrs_chunk.data = {}));
+})(osrs_chunk || (osrs_chunk = {}));
 ///<reference path="../libs/phaser/phaser.d.ts"/>
 ///<reference path="GameState.ts"/>
 ///<reference path="PreloaderState.ts"/>
 ///<reference path="scene/SceneLayoutManager.ts"/>
 ///<reference path="scene/SceneBuilder.ts"/>
+///<reference path="chunkdata/SaveFile.ts"/>
 var osrs_chunk;
 (function (osrs_chunk) {
     var PreloaderState = osrs_chunk.PreloaderState;
     var GameState = osrs_chunk.GameState;
+    var SaveData = osrs_chunk.data.SaveData;
     function createGame() {
         var game = window['game'] = new osrs_chunk.Game();
     }
@@ -643,6 +723,7 @@ var osrs_chunk;
                 parent: 'content',
             };
             _this = _super.call(this, config) || this;
+            _this.saveData = new SaveData(_this);
             _this['clearBeforeRender'] = false; // Fix for iOS10 bug causing flicker.
             _this.state.add('Boot', osrs_chunk.BootState, false);
             _this.state.add('Preload', PreloaderState, false);
@@ -668,7 +749,7 @@ var osrs_chunk;
                 this.game.add.plugin(PhaserInput.Plugin);
                 var convertedGame = game;
                 var borderWidth = 20;
-                var input = convertedGame.add.inputField(borderWidth / 2, 250, {
+                var input = convertedGame.add.inputField(borderWidth / 2, 320, {
                     font: '18px Arial',
                     fill: '#212121',
                     fontWeight: undefined,
@@ -686,16 +767,13 @@ var osrs_chunk;
                 // input.inputOptions.maxLines = false;
                 this.game.scene.menu.menuLayer.add(input);
                 this.inputBox = input;
-                this.inputBox.events.onInputDown.add(function () {
-                    console.log('aaaaaaah');
-                });
             }
             ChunkNotes.prototype.setNote = function (chunkID, notes) {
-                this.chunkNotes[chunkID] = notes;
+                this.game.saveData.chunkNotes[chunkID] = notes;
             };
             ChunkNotes.prototype.getNote = function (chunkID) {
-                if (this.chunkNotes[chunkID] !== undefined) {
-                    return this.chunkNotes[chunkID];
+                if (this.game.saveData.chunkNotes[chunkID] !== undefined) {
+                    return this.game.saveData.chunkNotes[chunkID];
                 }
                 else {
                     return '';
@@ -805,10 +883,10 @@ var osrs_chunk;
 (function (osrs_chunk) {
     var view;
     (function (view) {
+        var ChunkStatus = osrs_chunk.data.ChunkStatus;
         var MapOverlay = /** @class */ (function () {
             function MapOverlay(game) {
                 this.game = game;
-                this.activeChunks = [];
                 this.chunkImages = {};
             }
             MapOverlay.prototype.toggleChunk = function (chunkID) {
@@ -824,6 +902,7 @@ var osrs_chunk;
                     var imagePos = this.game.scene.chunkSelector.getSpritePosition(chunkID);
                     this.chunkImages[chunkID] = view.SceneBuilder.addImage("ActiveChunk_" + chunkID, 'chunks', osrs_chunk.gameConfig.chunkIDs.getSpriteIndexFromChunkID(chunkID), this.game.scene.backGroundLayerActive, imagePos.x, imagePos.y);
                 }
+                this.game.saveData.activeChunks[chunkID] = ChunkStatus.UNLOCKED;
             };
             MapOverlay.prototype.deActivateChunk = function (chunkID) {
                 if (this.chunkImages[chunkID] !== undefined) {
@@ -831,16 +910,7 @@ var osrs_chunk;
                     this.chunkImages[chunkID] = undefined;
                 }
                 delete this.chunkImages[chunkID];
-            };
-            MapOverlay.prototype.getDefaultChunkId = function () {
-                if (this.game.scene.mapOverlay.activeChunks.length > 0) {
-                    // Find center tile.
-                    return this.game.scene.activateChunks[0];
-                }
-                else {
-                    //Lumbridge
-                    return 12850;
-                }
+                delete this.game.saveData.activeChunks[chunkID];
             };
             return MapOverlay;
         }());
@@ -872,6 +942,8 @@ var osrs_chunk;
                 graphics.endFill();
                 this.selectedTileImage = view.SceneBuilder.addImage('chunkMap', 'chunks', 48, this.menuLayer, 0, 0);
                 this.selectedTileImage.anchor.set(0, 0);
+                this.selectedTileImage.width = this.menuWidth;
+                this.selectedTileImage.height = this.menuWidth;
                 var chunkSelector = this.game.scene.chunkSelector;
                 chunkSelector.selectTile = function (chunkID) {
                     if (chunkSelector.selectedTile !== chunkID) {
@@ -890,8 +962,9 @@ var osrs_chunk;
             }
             Menu.prototype.addUnlockButton = function () {
                 var _this = this;
-                var button = this.game.add.button(this.menuWidth / 2, 170, 'border', function () {
+                var button = this.game.add.button(this.menuWidth / 2, 260, 'border', function () {
                     _this.game.scene.mapOverlay.toggleChunk(_this.game.scene.chunkSelector.selectedTile);
+                    _this.game.saveData.saveFile();
                 }, this, 2, 1, 0, undefined, this.menuLayer);
                 button.anchor.set(0.5, 0);
                 button.width = this.menuWidth / 2;

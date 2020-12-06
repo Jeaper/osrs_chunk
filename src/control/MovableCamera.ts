@@ -8,45 +8,45 @@ module osrs_chunk.control {
 	export class MovableCamera {
 		private game : osrs_chunk.Game;
 		private cameraRoot : Phaser.Group;
-		constructor(game :osrs_chunk.Game, cameraRoot : Phaser.Group) {
+
+		constructor(game : osrs_chunk.Game, cameraRoot : Phaser.Group) {
 			this.game = game;
 			this.cameraRoot = cameraRoot;
-			const dummyTarget = {dummy:0};
-			TweenMax.fromTo(dummyTarget,1,{
-				dummy:0,
-			},{
-				dummy:1,
-				repeat:-1,
-				yoyo:true,
-				onUpdate:()=>{
+			const dummyTarget = { dummy : 0 };
+			TweenMax.fromTo(dummyTarget, 1, {
+				dummy : 0,
+			}, {
+				dummy : 1,
+				repeat : -1,
+				yoyo : true,
+				onUpdate : () => {
 					this.update();
 				}
 			});
 		}
 
 
-		public getMapPositionOfChunk(chunkID : number){
+		public getMapPositionOfChunk(chunkID : number) {
 			// const pos = gameConfig.chunkIDs.getPositionFromChunkID(chunkID);
 			const pos = this.game.scene.chunkSelector.getSpritePosition(chunkID);
-			// pos.x+=(gameConfig.gameSize.width / 2);
-			// pos.y +=(gameConfig.gameSize.height / 2);
 			const centerSpritePos = {
-				x: 506, y: 370,
+				x : (gameConfig.gameSize.width / 2) * gameConfig.mapAreaScale,
+				y : (gameConfig.gameSize.height / 2),
 			};
-			pos.x-=centerSpritePos.x;
-			pos.y -=centerSpritePos.y;
+			pos.x -= centerSpritePos.x;
+			pos.y -= centerSpritePos.y;
 			return new Phaser.Point(-pos.x, -pos.y);
 		}
 
-		public focusOnChunk(chunkID : number, moveTime : number = 0.5){
+		public focusOnChunk(chunkID : number, moveTime : number = 0.5) {
 
-			this.focusOnPosition(this.getMapPositionOfChunk(chunkID),moveTime);
+			this.focusOnPosition(this.getMapPositionOfChunk(chunkID), moveTime);
 		}
 
-		public focusOnPosition(point : Phaser.Point, moveTime : number = 0.5){
-			TweenMax.to(this.cameraRoot.position,moveTime, {
+		public focusOnPosition(point : Phaser.Point, moveTime : number = 0.5) {
+			TweenMax.to(this.cameraRoot.position, moveTime, {
 				...point,
-				ease:Linear.easeInOut
+				ease : Linear.easeInOut
 			});
 			console.log(point);
 		}

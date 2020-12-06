@@ -87,10 +87,13 @@ module osrs_chunk.view {
 			this.buildMenu(scene);
 			this.buildCamera(scene);
 
-			const defaultChunkId = game.scene.mapOverlay.getDefaultChunkId();
+			const defaultChunkId = game.saveData.getDefaultChunkId();
 			scene.chunkSelector.selectTile(defaultChunkId);
 			scene.moveableCamera.focusOnChunk(defaultChunkId,0);
 
+			for (const chunkId in game.saveData.activeChunks) {
+				scene.mapOverlay.activateChunk(Number(chunkId));
+			}
 
 			scene.setSceneObjectsUpdateOnlyExistingChildrenFlag();
 			return scene;

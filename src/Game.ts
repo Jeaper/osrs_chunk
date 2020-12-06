@@ -3,22 +3,23 @@
 ///<reference path="PreloaderState.ts"/>
 ///<reference path="scene/SceneLayoutManager.ts"/>
 ///<reference path="scene/SceneBuilder.ts"/>
+///<reference path="chunkdata/SaveFile.ts"/>
 
 module osrs_chunk {
 	import PreloaderState = osrs_chunk.PreloaderState;
 	import GameState = osrs_chunk.GameState;
 	import SceneLayoutManager = osrs_chunk.view.SceneLayoutManager;
 	import SceneBuilder = osrs_chunk.view.SceneBuilder;
+	import SaveData = osrs_chunk.data.SaveData;
 
 	export function createGame() : void {
 		const game = window['game'] = new osrs_chunk.Game() as osrs_chunk.Game;
-
 	}
 
 	export class Game extends Phaser.Game {
 
 		public scene : osrs_chunk.view.Scene;
-
+		public saveData : osrs_chunk.data.SaveData;
 		constructor() {
 			const config : Phaser.IGameConfig = {
 				enableDebug : true,
@@ -29,7 +30,7 @@ module osrs_chunk {
 
 			};
 			super(config);
-
+			this.saveData = new SaveData(this);
 
 			this['clearBeforeRender'] = false; // Fix for iOS10 bug causing flicker.
 

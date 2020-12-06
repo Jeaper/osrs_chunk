@@ -37,6 +37,8 @@ module osrs_chunk.view {
 
 			this.selectedTileImage = SceneBuilder.addImage('chunkMap', 'chunks', 48, this.menuLayer, 0, 0);
 			this.selectedTileImage.anchor.set(0, 0);
+			this.selectedTileImage.width = this.menuWidth;
+			this.selectedTileImage.height = this.menuWidth;
 
 			const chunkSelector = this.game.scene.chunkSelector;
 			chunkSelector.selectTile = (chunkID : number) => {
@@ -58,14 +60,13 @@ module osrs_chunk.view {
 
 
 		private addUnlockButton() {
-			const button = this.game.add.button(this.menuWidth/2, 170, 'border', () => {
+			const button = this.game.add.button(this.menuWidth/2, 260, 'border', () => {
 				this.game.scene.mapOverlay.toggleChunk(this.game.scene.chunkSelector.selectedTile);
+				this.game.saveData.saveFile();
 			}, this, 2, 1, 0, undefined, this.menuLayer);
 			button.anchor.set(0.5,0);
 			button.width = this.menuWidth/2;
 			button.height = 50;
-
-
 		}
 
 

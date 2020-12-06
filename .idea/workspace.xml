@@ -2,17 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91b31066-20e1-4c89-b8ff-fabc2cb1f887" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/chunkdata/SaveFile.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/config/GameConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/config/GameConfig.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/game.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameState.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/control/ChunkSelector.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/control/ChunkSelector.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/control/MovableCamera.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/control/MovableCamera.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scene/MapOverlay.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/MapOverlay.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scene/Menu.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/Menu.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/Scene.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/Scene.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scene/SceneBuilder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/SceneBuilder.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -156,9 +156,9 @@
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
     <state x="905" y="305" key="run.anything.popup/0.0.3440.1400/3440.213.1920.1040@0.0.3440.1400" timestamp="1607207451032" />
-    <state x="1099" y="373" width="672" height="678" key="search.everywhere.popup" timestamp="1607205746602">
+    <state x="1099" y="373" width="672" height="678" key="search.everywhere.popup" timestamp="1607250707075">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
-    <state x="1099" y="373" width="672" height="678" key="search.everywhere.popup/0.0.3440.1400/3440.213.1920.1040@0.0.3440.1400" timestamp="1607205746602" />
+    <state x="1099" y="373" width="672" height="678" key="search.everywhere.popup/0.0.3440.1400/3440.213.1920.1040@0.0.3440.1400" timestamp="1607250707075" />
   </component>
 </project>

@@ -23,6 +23,9 @@ module osrs_chunk {
 			const sceneBuilder = new SceneBuilder(game);
 			game.scene = sceneBuilder.buildScene();
 			const sceneLayoutManager = new SceneLayoutManager(game);
+
+			
+
 			// Draw background
 		}// create()
 

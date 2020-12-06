@@ -69,5 +69,33 @@ module osrs_chunk.gameConfig {
 			}
 			return new Phaser.Point(x, y);
 		},
+
+
+		getCenterChunk:(chunkIds : (number | string)[])=>{
+			const centerPositionOfTiles = {x:0,y:0};
+			chunkIds.forEach((chunkId)=>{
+				const position = gameConfig.chunkIDs.getPositionFromChunkID(Number(chunkId));
+				centerPositionOfTiles.x+=position.x;
+				centerPositionOfTiles.y+=position.y;
+			});
+			centerPositionOfTiles.x /= chunkIds.length;
+			centerPositionOfTiles.y /= chunkIds.length;
+
+			let centerChunk = {
+				chunkId:0,
+				delta: 999999
+			};
+			chunkIds.forEach((chunkId)=>{
+				const position = gameConfig.chunkIDs.getPositionFromChunkID(Number(chunkId));
+				// Math.
+				const delta = Math.abs(centerPositionOfTiles.x-position.x) + Math.abs(centerPositionOfTiles.y-position.y);
+				if (delta < centerChunk.delta){
+					centerChunk.delta = delta;
+					centerChunk.chunkId = Number(chunkId);
+				}
+			});
+
+			return Number(centerChunk.chunkId);
+		}
 	};
 }

@@ -4,7 +4,7 @@
 module osrs_chunk.data {
 	export class ChunkNotes {
 
-		public chunkNotes : Record<string,string>;
+
 		public inputBox : PhaserInput.InputBox;
 
 		private readonly game : osrs_chunk.Game;
@@ -16,7 +16,7 @@ module osrs_chunk.data {
 			const convertedGame = game as any;
 
 			const borderWidth = 20;
-			const input = convertedGame.add.inputField(borderWidth/2, 250, {
+			const input = convertedGame.add.inputField(borderWidth/2, 320, {
 					font : '18px Arial',
 					fill : '#212121',
 					fontWeight : undefined,
@@ -37,18 +37,15 @@ module osrs_chunk.data {
 			this.game.scene.menu.menuLayer.add(input);
 
 			this.inputBox = input;
-			this.inputBox.events.onInputDown.add(()=>{
-				console.log('aaaaaaah')
-			});
 		}
 
 		public setNote(chunkID : number, notes : string) {
-			this.chunkNotes[chunkID] = notes;
+			this.game.saveData.chunkNotes[chunkID] = notes;
 		}
 
 		public getNote(chunkID : number) {
-			if (this.chunkNotes[chunkID] !== undefined) {
-				return this.chunkNotes[chunkID];
+			if (this.game.saveData.chunkNotes[chunkID] !== undefined) {
+				return this.game.saveData.chunkNotes[chunkID];
 			}
 			else {
 				return '';

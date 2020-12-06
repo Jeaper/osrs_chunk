@@ -1,11 +1,14 @@
 /**
  * Created by jespe on 2019-02-14.
  */
+
 module osrs_chunk.view {
+
+	import ChunkStatus = osrs_chunk.data.ChunkStatus;
 
 	export class MapOverlay {
 
-		public activeChunks : number[];
+
 
 		private chunkImages : Record<string, Phaser.Image>;
 
@@ -13,7 +16,7 @@ module osrs_chunk.view {
 
 		constructor(game : osrs_chunk.Game) {
 			this.game = game;
-			this.activeChunks = [];
+
 			this.chunkImages = {};
 		}
 
@@ -38,6 +41,7 @@ module osrs_chunk.view {
 					imagePos.y
 				);
 			}
+			this.game.saveData.activeChunks[chunkID] = ChunkStatus.UNLOCKED;
 		}
 
 		public deActivateChunk(chunkID : number) {
@@ -46,17 +50,7 @@ module osrs_chunk.view {
 				this.chunkImages[chunkID] = undefined;
 			}
 			delete this.chunkImages[chunkID];
-		}
-
-		public getDefaultChunkId() : number {
-			if (this.game.scene.mapOverlay.activeChunks.length > 0) {
-				// Find center tile.
-				return this.game.scene.activateChunks[0];
-			}
-			else {
-				//Lumbridge
-				return 12850;
-			}
+			delete this.game.saveData.activeChunks[chunkID];
 		}
 	}
 }
