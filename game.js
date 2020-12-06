@@ -33,6 +33,7 @@ var osrs_chunk;
         var MovableCamera = /** @class */ (function () {
             function MovableCamera(game, cameraRoot) {
                 var _this = this;
+                this.position = { x: 0, y: 0 };
                 this.game = game;
                 this.cameraRoot = cameraRoot;
                 var dummyTarget = { dummy: 0 };
@@ -46,7 +47,41 @@ var osrs_chunk;
                         _this.update();
                     }
                 });
+                var zoomAmount = 0.05;
+                game.input.mouse.mouseWheelCallback = function (event) {
+                    var zoom = (event.wheelDelta / 120) * zoomAmount;
+                    _this.cameraRoot.scale.x += zoom;
+                    _this.cameraRoot.scale.y += zoom;
+                    _this.focusOnPosition(_this.position, 0);
+                };
+                this.setupPositionHandler(cameraRoot);
             }
+            MovableCamera.prototype.setupPositionHandler = function (cameraRoot) {
+                var valueHolder = {
+                    x: 0,
+                    y: 0
+                };
+                Object.defineProperties(this.position, {
+                    x: {
+                        get: function () {
+                            return valueHolder.x;
+                        },
+                        set: function (v) {
+                            valueHolder.x = v;
+                            cameraRoot.x = v * cameraRoot.scale.x;
+                        }
+                    },
+                    y: {
+                        get: function () {
+                            return valueHolder.y;
+                        },
+                        set: function (v) {
+                            valueHolder.y = v;
+                            cameraRoot.y = v * cameraRoot.scale.y;
+                        }
+                    }
+                });
+            };
             MovableCamera.prototype.getMapPositionOfChunk = function (chunkID) {
                 // const pos = gameConfig.chunkIDs.getPositionFromChunkID(chunkID);
                 var pos = this.game.scene.chunkSelector.getSpritePosition(chunkID);
@@ -64,24 +99,23 @@ var osrs_chunk;
             };
             MovableCamera.prototype.focusOnPosition = function (point, moveTime) {
                 if (moveTime === void 0) { moveTime = 0.5; }
-                TweenMax.to(this.cameraRoot.position, moveTime, __assign(__assign({}, point), { ease: Linear.easeInOut }));
-                console.log(point);
+                TweenMax.to(this.position, moveTime, __assign(__assign({}, point), { ease: Linear.easeInOut }));
             };
             MovableCamera.prototype.update = function () {
                 var game = this.game;
                 var speed = 1.2;
                 var movementSpeed = speed * game.time.physicsElapsedMS;
                 if (game.input.keyboard.isDown(KeyCode.UP) || game.input.keyboard.isDown(KeyCode.W)) {
-                    this.cameraRoot.y += movementSpeed;
+                    this.position.y += movementSpeed;
                 }
                 else if (game.input.keyboard.isDown(KeyCode.DOWN) || game.input.keyboard.isDown(KeyCode.S)) {
-                    this.cameraRoot.y -= movementSpeed;
+                    this.position.y -= movementSpeed;
                 }
                 if (game.input.keyboard.isDown(KeyCode.LEFT) || game.input.keyboard.isDown(KeyCode.A)) {
-                    this.cameraRoot.x += movementSpeed;
+                    this.position.x += movementSpeed;
                 }
                 else if (game.input.keyboard.isDown(KeyCode.RIGHT) || game.input.keyboard.isDown(KeyCode.D)) {
-                    this.cameraRoot.x -= movementSpeed;
+                    this.position.x -= movementSpeed;
                 }
             };
             return MovableCamera;

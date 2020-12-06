@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91b31066-20e1-4c89-b8ff-fabc2cb1f887" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/chunkdata/SaveFile.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/config/GameConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/config/GameConfig.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/game.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameState.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/chunkdata/ChunkNotes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/control/MovableCamera.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/control/MovableCamera.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/MapOverlay.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/MapOverlay.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/Menu.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/Menu.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/SceneBuilder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/SceneBuilder.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

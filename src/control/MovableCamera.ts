@@ -8,7 +8,10 @@ module osrs_chunk.control {
 	export class MovableCamera {
 		private game : osrs_chunk.Game;
 		private cameraRoot : Phaser.Group;
-
+		private position : {
+			x:number,
+			y:number
+		}={x:0,y:0};
 		constructor(game : osrs_chunk.Game, cameraRoot : Phaser.Group) {
 			this.game = game;
 			this.cameraRoot = cameraRoot;
@@ -23,8 +26,45 @@ module osrs_chunk.control {
 					this.update();
 				}
 			});
+
+			const zoomAmount = 0.05;
+			game.input.mouse.mouseWheelCallback=(event)=>{
+				const zoom = ((event as any).wheelDelta /120) * zoomAmount;
+				this.cameraRoot.scale.x += zoom;
+				this.cameraRoot.scale.y += zoom;
+				this.focusOnPosition(this.position,0);
+			};
+
+			this.setupPositionHandler(cameraRoot);
 		}
 
+
+		private setupPositionHandler(cameraRoot : Phaser.Group) {
+			const valueHolder = {
+				x : 0,
+				y : 0
+			};
+			Object.defineProperties(this.position, {
+				x : {
+					get() : number {
+						return valueHolder.x;
+					},
+					set(v : number) {
+						valueHolder.x = v;
+						cameraRoot.x = v * cameraRoot.scale.x;
+					}
+				},
+				y : {
+					get() : number {
+						return valueHolder.y;
+					},
+					set(v : number) {
+						valueHolder.y = v;
+						cameraRoot.y = v * cameraRoot.scale.y;
+					}
+				}
+			});
+		}
 
 		public getMapPositionOfChunk(chunkID : number) {
 			// const pos = gameConfig.chunkIDs.getPositionFromChunkID(chunkID);
@@ -43,12 +83,11 @@ module osrs_chunk.control {
 			this.focusOnPosition(this.getMapPositionOfChunk(chunkID), moveTime);
 		}
 
-		public focusOnPosition(point : Phaser.Point, moveTime : number = 0.5) {
-			TweenMax.to(this.cameraRoot.position, moveTime, {
+		public focusOnPosition(point : {x:number,y:number}, moveTime : number = 0.5) {
+			TweenMax.to(this.position, moveTime, {
 				...point,
 				ease : Linear.easeInOut
 			});
-			console.log(point);
 		}
 
 
@@ -58,18 +97,20 @@ module osrs_chunk.control {
 			const speed = 1.2;
 			const movementSpeed = speed * game.time.physicsElapsedMS;
 			if (game.input.keyboard.isDown(KeyCode.UP) || game.input.keyboard.isDown(KeyCode.W)) {
-				this.cameraRoot.y += movementSpeed;
+				this.position.y += movementSpeed;
 			}
 			else if (game.input.keyboard.isDown(KeyCode.DOWN) || game.input.keyboard.isDown(KeyCode.S)) {
-				this.cameraRoot.y -= movementSpeed;
+				this.position.y -= movementSpeed;
 			}
 
 			if (game.input.keyboard.isDown(KeyCode.LEFT) || game.input.keyboard.isDown(KeyCode.A)) {
-				this.cameraRoot.x += movementSpeed;
+				this.position.x += movementSpeed;
 			}
 			else if (game.input.keyboard.isDown(KeyCode.RIGHT) || game.input.keyboard.isDown(KeyCode.D)) {
-				this.cameraRoot.x -= movementSpeed;
+				this.position.x -= movementSpeed;
 			}
+
+
 		}
 
 	}
